@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: ");
         setReferences();
-//        getDataFromAPINextDay();
-        getDataFromAPICurrentDay();
         setAdapter();
+        getDataFromAPINextDay();
+        getDataFromAPICurrentDay();
     }
 
     private void getDataFromAPICurrentDay() {
@@ -99,24 +99,32 @@ public class MainActivity extends AppCompatActivity {
         service.getWeatherCity(q, units, cnt, appid).enqueue(new Callback<WeatherCity>() {
             @Override
             public void onResponse(Response<WeatherCity> response) {
-//                Log.d(TAG, "onResponse: ");
-                WeatherCity weatherCity = response.body();
+                Log.d(TAG, "Next Day onResponse: ");
+                final WeatherCity weatherCity = response.body();
                 Log.d(TAG, String.format("onResponse: %s", weatherCity.getList().get(0).getHumidity()));
-                for (WeatherCity.List list : weatherCity.getList()){
-                    NextDayModel.list.add(new NextDayModel(
-                            "http://openweathermap.org/img/w/"
-                                    + list.getWeather().get(0).getIcon().toString()
-                                    + ".png",
-                            list.getWeather().get(0).getMain(),
-                            list.getTemp().getMax(),
-                            list.getTemp().getMin()));
-                    Log.d(TAG, String.format("onResponse: %s", list.getWeather().get(0).getIcon()));
-                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (WeatherCity.List list : weatherCity.getList()){
+                            NextDayModel.list.add(new NextDayModel(
+                                    "http://openweathermap.org/img/w/"
+                                            + list.getWeather().get(0).getIcon().toString()
+                                            + ".png",
+                                    list.getWeather().get(0).getMain(),
+                                    list.getTemp().getMax(),
+                                    list.getTemp().getMin()));
+                            adapter.notifyDataSetChanged();
+                            Log.d(TAG, String.format("onResponse: %s", list.getWeather().get(0).getIcon()));
+                        }
+                    }
+                });
+
+
             }
 
             @Override
             public void onFailure(Throwable t) {
-//                Log.d(TAG, "onFailure: ");
+                Log.d(TAG, "Next Day onFailure: ");
             }
         });
     }
@@ -143,13 +151,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
+        NextDayModel.list.clear();
+        adapter.notifyDataSetChanged();
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-        getDataFromAPINextDay();
+
     }
 
     @Override
