@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="vn.tranthanhtu.sunshine.activitis.MainActivity">
-
     <LinearLayout
         android:background="@color/colorPrimary"
         android:layout_weight="2"

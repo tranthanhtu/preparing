@@ -10,17 +10,22 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import retrofit2.Callback;
-import retrofit2.GsonConverterFactory;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import vn.tranthanhtu.sunshine.R;
 import vn.tranthanhtu.sunshine.adapters.NextDayWeatherAdapter;
+import vn.tranthanhtu.sunshine.eventbus.BaseEvent;
+import vn.tranthanhtu.sunshine.eventbus.LoadDataCurrentDaySuccessEvent;
+import vn.tranthanhtu.sunshine.eventbus.LoadDataNextDaySuccessEvent;
+import vn.tranthanhtu.sunshine.managers.RealmHandle;
 import vn.tranthanhtu.sunshine.models.APImodels.WeatherCity;
 import vn.tranthanhtu.sunshine.models.APImodels.WeatherCityCurrent;
+import vn.tranthanhtu.sunshine.models.APImodels.modelNextDay.List;
 import vn.tranthanhtu.sunshine.models.NextDayModel;
-import vn.tranthanhtu.sunshine.services.APIOpenWeather;
-import vn.tranthanhtu.sunshine.services.APIOpenWeatherCurrentDay;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.toString();
@@ -33,100 +38,29 @@ public class MainActivity extends AppCompatActivity {
     private int tempMaxCurrent;
     private int tempMinCurrent;
 
+    WeatherCity weatherCity;
+    WeatherCityCurrent current;
     RecyclerView rvNextDay;
     private NextDayWeatherAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
         Log.d(TAG, "onCreate: ");
+//        weatherCity = RealmHandle.getInstances().getWeatherCity();
+//        current = RealmHandle.getInstances().getWeatherCityCurrent();
+//        Log.d(TAG, String.format("onCreate: %s", weatherCity.getList().get(0).getDt()));
         setReferences();
+        getTimeCurrent();
         setAdapter();
-        getDataFromAPINextDay();
-        getDataFromAPICurrentDay();
-    }
+//
+//        loadDatatoAdapter();
+//        setupUI();
+//        getDataFromAPICurrentDay();
+//        getDataFromAPINextDay();
 
-    private void getDataFromAPICurrentDay() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.openweathermap.org")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        APIOpenWeatherCurrentDay service = retrofit.create(APIOpenWeatherCurrentDay.class);
-
-        String appid = "66f5fe4f80f450d73ad7f7cd100f95b6";
-        String q = "hanoi";
-
-        service.getWeatherCityCurrent(q, appid).enqueue(new Callback<WeatherCityCurrent>() {
-            @Override
-            public void onResponse(Response<WeatherCityCurrent> response) {
-                Log.d(TAG, "onResponse: ");
-                WeatherCityCurrent current = response.body();
-                Picasso
-                        .with(getApplicationContext())
-                        .load("http://openweathermap.org/img/w/"
-                                + current.getWeather().get(0).getIcon()
-                                + ".png")
-                        .into(imvIconWeatherCurrent);
-                tempMaxCurrent = (int)Float.parseFloat(String.valueOf(current.getMain().getTemp_max())) - 273;
-                tempMinCurrent = (int)Float.parseFloat(String.valueOf(current.getMain().getTemp_min())) - 273;
-                tvTemperatureMinCurrent.setText(tempMinCurrent + "");
-                tvTemperatureMaxCurrent.setText(tempMaxCurrent + "");
-                tvDescriptionCurrent.setText(current.getWeather().get(0).getMain());
-                Log.d(TAG, String.format("onResponse: %s", tempMaxCurrent));
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.d(TAG, "onFailure: ");
-            }
-        });
-
-    }
-
-    private void getDataFromAPINextDay() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.openweathermap.org")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        APIOpenWeather service = retrofit.create(APIOpenWeather.class);
-        String q = "hanoi";
-        String units = "metric";
-        String cnt = "15";
-        String appid = "66f5fe4f80f450d73ad7f7cd100f95b6";
-
-        service.getWeatherCity(q, units, cnt, appid).enqueue(new Callback<WeatherCity>() {
-            @Override
-            public void onResponse(Response<WeatherCity> response) {
-                Log.d(TAG, "Next Day onResponse: ");
-                final WeatherCity weatherCity = response.body();
-                Log.d(TAG, String.format("onResponse: %s", weatherCity.getList().get(0).getHumidity()));
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (WeatherCity.List list : weatherCity.getList()){
-                            NextDayModel.list.add(new NextDayModel(
-                                    "http://openweathermap.org/img/w/"
-                                            + list.getWeather().get(0).getIcon().toString()
-                                            + ".png",
-                                    list.getWeather().get(0).getMain(),
-                                    list.getTemp().getMax(),
-                                    list.getTemp().getMin()));
-                            adapter.notifyDataSetChanged();
-                            Log.d(TAG, String.format("onResponse: %s", list.getWeather().get(0).getIcon()));
-                        }
-                    }
-                });
-
-
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.d(TAG, "Next Day onFailure: ");
-            }
-        });
     }
 
     private void setReferences() {
@@ -139,20 +73,81 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Subscribe
+    void onDataNextDay(BaseEvent baseEvent) {
+        if (baseEvent instanceof LoadDataNextDaySuccessEvent) {
+            weatherCity = RealmHandle.getInstances().getWeatherCity();
+            Log.d(TAG, String.format("onCreate: %s", weatherCity.getList().get(0).getDt()));
+            loadDatatoAdapter();
+        }else {
+
+        }
+    }
+
+    @Subscribe
+    void onDataCurrent(BaseEvent baseEvent){
+        if (baseEvent instanceof LoadDataCurrentDaySuccessEvent){
+            current = RealmHandle.getInstances().getWeatherCityCurrent();
+            setupUI();
+        }else {
+
+        }
+    }
+
+    private void setupUI() {
+        Picasso
+                .with(getApplicationContext())
+                .load("http://openweathermap.org/img/w/"
+                        + current.getWeather().get(0).getIcon()
+                        + ".png")
+                .into(imvIconWeatherCurrent);
+        tempMaxCurrent = (int) Float.parseFloat(String.valueOf(current.getMain().getTemp_max())) - 273;
+        tempMinCurrent = (int) Float.parseFloat(String.valueOf(current.getMain().getTemp_min())) - 273;
+        tvTemperatureMinCurrent.setText(tempMinCurrent + "");
+        tvTemperatureMaxCurrent.setText(tempMaxCurrent + "");
+        tvDescriptionCurrent.setText(current.getWeather().get(0).getMain());
+    }
+
+    private void loadDatatoAdapter() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (List list : weatherCity.getList()) {
+                    NextDayModel.list.add(new NextDayModel(
+                            "http://openweathermap.org/img/w/"
+                                    + list.getWeather().get(0).getIcon().toString()
+                                    + ".png",
+                            list.getWeather().get(0).getMain(),
+                            list.getTemp().getMax(),
+                            list.getTemp().getMin()));
+                    adapter.notifyDataSetChanged();
+                    Log.d(TAG, String.format("onResponse: %s", list.getWeather().get(0).getIcon()));
+                }
+            }
+        });
+        setAdapter();
+    }
+
+    private void getTimeCurrent() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d");
+        String currentTime = dateFormat.format(new Date());
+        tvDateCurrent.setText("Today, " + currentTime);
+    }
+
     private void setAdapter() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvNextDay.setLayoutManager(layoutManager);
         rvNextDay.setHasFixedSize(true);
         adapter = new NextDayWeatherAdapter();
         rvNextDay.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
-        NextDayModel.list.clear();
-        adapter.notifyDataSetChanged();
     }
 
 
@@ -167,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop: ");
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
