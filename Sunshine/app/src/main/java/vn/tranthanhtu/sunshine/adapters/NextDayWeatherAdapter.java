@@ -16,11 +16,11 @@ import static vn.tranthanhtu.sunshine.models.NextDayModel.list;
  */
 
 public class NextDayWeatherAdapter extends RecyclerView.Adapter<NextDayViewHolder> {
+
     @Override
     public NextDayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_next_day_weather, parent, false);
-
         NextDayViewHolder viewHolder = new NextDayViewHolder(view);
         return viewHolder;
     }

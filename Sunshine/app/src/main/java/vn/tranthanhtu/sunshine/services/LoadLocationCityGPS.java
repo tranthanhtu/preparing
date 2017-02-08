@@ -30,7 +30,7 @@ public class LoadLocationCityGPS extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        loadLocation();
+//        loadLocation();
     }
 
     private void loadLocation() {
@@ -43,8 +43,7 @@ public class LoadLocationCityGPS extends IntentService {
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         city = hereLocation(location.getLatitude(), location.getLongitude());
         Log.d(TAG, "loadLocation: " + city);
-        Log.d(TAG, "loadLocation: "+ location.getLatitude());
-        Log.d(TAG, "loadLocation: "+ location.getLongitude());
+
 
 //            EventBus.getDefault().post(new LoadLocationSuccessEvent());
     }

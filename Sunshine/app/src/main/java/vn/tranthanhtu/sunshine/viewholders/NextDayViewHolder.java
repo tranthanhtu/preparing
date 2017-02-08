@@ -1,6 +1,7 @@
 package vn.tranthanhtu.sunshine.viewholders;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +16,7 @@ import vn.tranthanhtu.sunshine.models.NextDayModel;
  * Created by Dell latitude E6520 on 2/6/2017.
  */
 
-public class NextDayViewHolder extends RecyclerView.ViewHolder {
+public class NextDayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     private ImageView imvIconWeather;
     private TextView tvDescription;
@@ -24,6 +25,7 @@ public class NextDayViewHolder extends RecyclerView.ViewHolder {
     private Context context;
     private int tempMax;
     private int tempMin;
+    private Cursor cursor;
     public NextDayViewHolder(View itemView) {
         super(itemView);
         context = itemView.getContext();
@@ -38,10 +40,15 @@ public class NextDayViewHolder extends RecyclerView.ViewHolder {
         tvDescription.setText(nextDayModel.getDescription());
 
         tempMax = (int)Float.parseFloat(nextDayModel.getTemperatureMax());
-        tvTemperatureMax.setText(tempMax + "");
+        tvTemperatureMax.setText(tempMax + "\u00b0");
 
         tempMin = (int)Float.parseFloat(nextDayModel.getTemperatureMin());
-        tvTemperatureMin.setText(tempMin + "");
+        tvTemperatureMin.setText(tempMin + "\u00b0");
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        v.setOnClickListener(this);
     }
 }

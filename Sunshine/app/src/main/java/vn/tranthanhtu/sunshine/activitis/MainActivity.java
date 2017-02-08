@@ -1,10 +1,16 @@
 package vn.tranthanhtu.sunshine.activitis;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +24,7 @@ import java.util.Date;
 
 import vn.tranthanhtu.sunshine.R;
 import vn.tranthanhtu.sunshine.adapters.NextDayWeatherAdapter;
+import vn.tranthanhtu.sunshine.adapters.RecyclerItemClickListener;
 import vn.tranthanhtu.sunshine.eventbus.BaseEvent;
 import vn.tranthanhtu.sunshine.eventbus.LoadDataCurrentDaySuccessEvent;
 import vn.tranthanhtu.sunshine.eventbus.LoadDataNextDaySuccessEvent;
@@ -55,12 +62,26 @@ public class MainActivity extends AppCompatActivity {
         setReferences();
         getTimeCurrent();
         setAdapter();
+        addListeners();
 //
 //        loadDatatoAdapter();
 //        setupUI();
 //        getDataFromAPICurrentDay();
 //        getDataFromAPINextDay();
 
+    }
+
+    private void addListeners() {
+        rvNextDay.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                        intent.putExtra("position", position);
+                        startActivity(intent);
+                        Log.d(TAG, String.format("onItemClick: %s", position));
+                    }
+                }));
     }
 
     private void setReferences() {
@@ -104,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 .into(imvIconWeatherCurrent);
         tempMaxCurrent = (int) Float.parseFloat(String.valueOf(current.getMain().getTemp_max())) - 273;
         tempMinCurrent = (int) Float.parseFloat(String.valueOf(current.getMain().getTemp_min())) - 273;
-        tvTemperatureMinCurrent.setText(tempMinCurrent + "");
-        tvTemperatureMaxCurrent.setText(tempMaxCurrent + "");
+        tvTemperatureMinCurrent.setText(tempMinCurrent + "\u00b0");
+        tvTemperatureMaxCurrent.setText(tempMaxCurrent + "\u00b0");
         tvDescriptionCurrent.setText(current.getWeather().get(0).getMain());
     }
 
@@ -177,4 +198,31 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onRestart: ");
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings){
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_map){
+            double latitude = 40.714728;
+            double longitude = -73.998672;
+            String uriBegin = "geo:" + latitude + "," + longitude;
+            Uri uri = Uri.parse(uriBegin);
+            Intent intent = new Intent(android.content.Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

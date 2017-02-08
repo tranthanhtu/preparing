@@ -9,41 +9,12 @@
 
     <LinearLayout
         android:background="@color/colorPrimary"
-        android:layout_weight="2"
+        android:layout_weight="1.5"
         android:padding="24dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="0dp">
-        <LinearLayout
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
-            <LinearLayout
-                android:gravity="center|left"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent">
-                <TextView
-                    android:textColor="@android:color/white"
-                    android:textSize="37.5sp"
-                    android:text="Sunshine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:gravity="right|center"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/imv_setting"
-                    android:src="@drawable/dots_vertical"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp" />
-            </LinearLayout>
 
-        </LinearLayout>
         <LinearLayout
             android:gravity="center"
             android:layout_weight="1"
