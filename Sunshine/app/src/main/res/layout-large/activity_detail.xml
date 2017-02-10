@@ -15,14 +15,16 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1.05">
 
             <LinearLayout
-                android:gravity="center|top"
-                android:layout_weight="1"
+                android:layout_marginBottom="10dp"
+                android:gravity="center|bottom"
+                android:layout_weight="1.8"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
                 <TextView
+                    android:id="@+id/tv_time_date"
                     android:textSize="30sp"
                     android:text="Saturday, September 24"
                     android:layout_width="wrap_content"
@@ -32,12 +34,12 @@
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_weight="2.5"
+                android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
 
                 <LinearLayout
-                    android:gravity="center"
+                    android:gravity="center|bottom"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
@@ -50,7 +52,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="center"
+                    android:gravity="center|bottom"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
@@ -66,7 +68,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
                 <LinearLayout
@@ -78,7 +80,7 @@
                         android:id="@+id/tv_description_detail"
                         android:fontFamily="sans-serif-light"
                         android:textColor="#727272"
-                        android:textSize="54sp"
+                        android:textSize="30sp"
                         android:text="Rainy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -102,6 +104,13 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -110,6 +119,12 @@
             android:layout_weight="1"
             android:background="#455A64"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_weight="0.2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,12 +133,13 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
-                        android:textSize="25sp"
+                        android:layout_marginLeft="50dp"
+                        android:textSize="30sp"
                         style="@style/DetailLabel"
                         android:text="Humidity"
                         android:layout_width="wrap_content"
@@ -139,7 +155,7 @@
                     <TextView
                         android:id="@+id/tv_humidity_detail"
                         style="@style/ExtraWeatherMeasurement"
-                        android:textSize="25sp"
+                        android:textSize="30sp"
                         android:text="38%"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -156,14 +172,15 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
+                        android:layout_marginLeft="50dp"
                         style="@style/DetailLabel"
                         android:text="Pressure"
-                        android:textSize="25sp"
+                        android:textSize="30sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -178,7 +195,7 @@
                         android:id="@+id/tv_pressure_detail"
                         style="@style/ExtraWeatherMeasurement"
                         android:text="995 hPa"
-                        android:textSize="25sp"
+                        android:textSize="30sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -193,14 +210,15 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
+                        android:layout_marginLeft="50dp"
                         style="@style/DetailLabel"
                         android:text="Wind"
-                        android:textSize="25sp"
+                        android:textSize="30sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -220,6 +238,13 @@
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="0.2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
 
             </LinearLayout>
 

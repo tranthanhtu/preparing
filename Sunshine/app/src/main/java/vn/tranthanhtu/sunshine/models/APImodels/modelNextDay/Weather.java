@@ -10,7 +10,7 @@ import io.realm.RealmObject;
 
 public class Weather extends RealmObject {
     @SerializedName("id")
-    public String id;
+    public int id;
     @SerializedName("main")
     public String main;
     @SerializedName("description")
@@ -18,7 +18,7 @@ public class Weather extends RealmObject {
     @SerializedName("icon")
     public String icon;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

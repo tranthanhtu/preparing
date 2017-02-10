@@ -8,20 +8,26 @@ import java.util.List;
  */
 
 public class NextDayModel {
-    private String urlIcon;
+    private int id;
     private String description;
     private String temperatureMax;
     private String temperatureMin;
+    private long dateMilis;
 
-    public NextDayModel(String urlIcon, String description, String temperatureMax, String temperatureMin) {
-        this.urlIcon = urlIcon;
+    public NextDayModel(int id, String description, String temperatureMax, String temperatureMin, long dateMilis) {
+        this.id = id;
         this.description = description;
         this.temperatureMax = temperatureMax;
         this.temperatureMin = temperatureMin;
+        this.dateMilis = dateMilis;
     }
 
-    public String getUrlIcon() {
-        return urlIcon;
+    public long getDateMilis() {
+        return dateMilis;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getDescription() {

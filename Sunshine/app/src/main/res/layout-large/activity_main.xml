@@ -9,19 +9,19 @@
 
     <LinearLayout
         android:background="@color/colorPrimary"
-        android:layout_weight="1.5"
+        android:layout_weight="1.8"
         android:padding="24dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="0dp">
 
         <LinearLayout
-            android:gravity="center"
+            android:gravity="center|top"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp">
             <TextView
-                android:textSize="21sp"
+                android:textSize="29sp"
                 android:id="@+id/tv_date_current"
                 android:textColor="@android:color/white"
                 android:text="Today, July 1"
@@ -41,8 +41,8 @@
                 <ImageView
                     android:id="@+id/imv_icon_weather_current"
                     android:src="@drawable/icon_1000"
-                    android:layout_width="105dp"
-                    android:layout_height="105dp" />
+                    android:layout_width="144dp"
+                    android:layout_height="144dp" />
             </LinearLayout>
             <LinearLayout
                 android:gravity="center"
@@ -51,9 +51,10 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/tv_temperature_max_current"
-                    android:textColor="@android:color/white"
-                    android:textSize="82.5sp"
+                    android:textSize="108sp"
                     android:text="18"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@color/primary_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -74,7 +75,7 @@
                     android:id="@+id/tv_description_current"
                     android:text="Sunny"
                     android:textSize="30sp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/secondary_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -85,8 +86,9 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/tv_temperature_min_current"
-                    android:textSize="37.5sp"
+                    android:textSize="54sp"
                     android:text="13"
+                    android:fontFamily="sans-serif-light"
                     android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

@@ -11,7 +11,7 @@ import io.realm.RealmObject;
 
 public class List extends RealmObject {
     @SerializedName("dt")
-    public String dt;
+    public long dt;
     @SerializedName("temp")
     public Temp temp;
     @SerializedName("pressure")
@@ -21,13 +21,13 @@ public class List extends RealmObject {
     @SerializedName("weather")
     public RealmList<Weather> weather;
     @SerializedName("speed")
-    public String speed;
+    public float speed;
     @SerializedName("deg")
-    public String deg;
+    public float deg;
     @SerializedName("clouds")
     public String clouds;
 
-    public String getDt() {
+    public long getDt() {
         return dt;
     }
 
@@ -47,11 +47,11 @@ public class List extends RealmObject {
         return weather;
     }
 
-    public String getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    public String getDeg() {
+    public float getDeg() {
         return deg;
     }
 

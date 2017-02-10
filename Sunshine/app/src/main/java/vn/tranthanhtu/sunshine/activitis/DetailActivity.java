@@ -10,12 +10,14 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import vn.tranthanhtu.sunshine.R;
 import vn.tranthanhtu.sunshine.managers.RealmHandle;
 import vn.tranthanhtu.sunshine.models.APImodels.WeatherCity;
 import vn.tranthanhtu.sunshine.models.APImodels.modelNextDay.List;
+import vn.tranthanhtu.sunshine.utils.SunshineWeatherUtils;
 
 public class DetailActivity extends AppCompatActivity {
     public static final String TAG = DetailActivity.class.toString();
@@ -29,6 +31,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tvHumidityDetail;
     private TextView tvPressureDetail;
     private TextView tvWindDetail;
+    private TextView tvTimeDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,15 +46,24 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setupUI() {
         List detail = weatherCity.getList().get(Integer.parseInt(position));
-        Picasso.with(this).load("http://openweathermap.org/img/w/"
-                + detail.getWeather().get(0).getIcon() + ".png")
-                .into(imvIconDetail);
+
+        imvIconDetail.setImageResource(SunshineWeatherUtils
+                .getLargeArtResourceIdForWeatherCondition(detail.getWeather().get(0).getId()));
         tvTemperatureMaxDetail.setText((int)Float.parseFloat(detail.getTemp().getMax()) + "\u00b0");
         tvTemperatureMinDetail.setText((int)Float.parseFloat(detail.getTemp().getMin()) + "\u00b0");
         tvDescriptionDetail.setText(detail.getWeather().get(0).getMain());
         tvHumidityDetail.setText(detail.getHumidity() + " %");
         tvPressureDetail.setText(detail.getPressure() + " hPa");
-        tvWindDetail.setText(detail.getSpeed() + " km/h NW");
+
+        String windString = SunshineWeatherUtils.getFormattedWind(
+                this,
+                detail.getSpeed(),
+                detail.getDeg());
+        tvWindDetail.setText(windString);
+
+        String dateString1 = new SimpleDateFormat("EEEE, MMMM d").format(new Date(detail.getDt() * 1000));
+        tvTimeDate.setText(dateString1);
+
     }
 
     private void getReferences() {
@@ -62,6 +74,7 @@ public class DetailActivity extends AppCompatActivity {
         tvHumidityDetail = (TextView) findViewById(R.id.tv_humidity_detail);
         tvPressureDetail = (TextView) findViewById(R.id.tv_pressure_detail);
         tvWindDetail = (TextView) findViewById(R.id.tv_wind_detail);
+        tvTimeDate = (TextView) findViewById(R.id.tv_time_date);
     }
 
     private void loadDataFromMain() {

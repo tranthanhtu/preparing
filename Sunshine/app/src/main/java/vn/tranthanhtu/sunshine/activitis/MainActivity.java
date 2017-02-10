@@ -1,7 +1,6 @@
 package vn.tranthanhtu.sunshine.activitis;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,25 +13,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import vn.tranthanhtu.sunshine.R;
 import vn.tranthanhtu.sunshine.adapters.NextDayWeatherAdapter;
 import vn.tranthanhtu.sunshine.adapters.RecyclerItemClickListener;
-import vn.tranthanhtu.sunshine.eventbus.BaseEvent;
-import vn.tranthanhtu.sunshine.eventbus.LoadDataCurrentDaySuccessEvent;
-import vn.tranthanhtu.sunshine.eventbus.LoadDataNextDaySuccessEvent;
 import vn.tranthanhtu.sunshine.managers.RealmHandle;
 import vn.tranthanhtu.sunshine.models.APImodels.WeatherCity;
 import vn.tranthanhtu.sunshine.models.APImodels.WeatherCityCurrent;
 import vn.tranthanhtu.sunshine.models.APImodels.modelNextDay.List;
 import vn.tranthanhtu.sunshine.models.NextDayModel;
+import vn.tranthanhtu.sunshine.utils.SunshineWeatherUtils;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.toString();
@@ -45,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private int tempMaxCurrent;
     private int tempMinCurrent;
 
+
+
     WeatherCity weatherCity;
     WeatherCityCurrent current;
     RecyclerView rvNextDay;
@@ -54,16 +48,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EventBus.getDefault().register(this);
+        getSupportActionBar().setElevation(0f);
+        weatherCity = RealmHandle.getInstances().getWeatherCity();
+        current = RealmHandle.getInstances().getWeatherCityCurrent();
         Log.d(TAG, "onCreate: ");
-//        weatherCity = RealmHandle.getInstances().getWeatherCity();
-//        current = RealmHandle.getInstances().getWeatherCityCurrent();
 //        Log.d(TAG, String.format("onCreate: %s", weatherCity.getList().get(0).getDt()));
         setReferences();
-        getTimeCurrent();
+        setupUI();
         setAdapter();
+        loadDatatoAdapter();
+        getTimeCurrent();
         addListeners();
-//
+
+
 //        loadDatatoAdapter();
 //        setupUI();
 //        getDataFromAPICurrentDay();
@@ -95,38 +92,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Subscribe
-    void onDataNextDay(BaseEvent baseEvent) {
-        if (baseEvent instanceof LoadDataNextDaySuccessEvent) {
-            weatherCity = RealmHandle.getInstances().getWeatherCity();
-            Log.d(TAG, String.format("onCreate: %s", weatherCity.getList().get(0).getDt()));
-            loadDatatoAdapter();
-        }else {
-
-        }
-    }
-
-    @Subscribe
-    void onDataCurrent(BaseEvent baseEvent){
-        if (baseEvent instanceof LoadDataCurrentDaySuccessEvent){
-            current = RealmHandle.getInstances().getWeatherCityCurrent();
-            setupUI();
-        }else {
-
-        }
-    }
-
     private void setupUI() {
-        Picasso
-                .with(getApplicationContext())
-                .load("http://openweathermap.org/img/w/"
-                        + current.getWeather().get(0).getIcon()
-                        + ".png")
-                .into(imvIconWeatherCurrent);
-        tempMaxCurrent = (int) Float.parseFloat(String.valueOf(current.getMain().getTemp_max())) - 273;
-        tempMinCurrent = (int) Float.parseFloat(String.valueOf(current.getMain().getTemp_min())) - 273;
+        Log.d(TAG, "setupUI: "+ current.getWeather().get(0).getId());
+        imvIconWeatherCurrent.setImageResource(SunshineWeatherUtils
+                .getLargeArtResourceIdForWeatherCondition(current.getWeather().get(0).getId()));
+        tempMinCurrent = (int) Float.parseFloat(weatherCity.getList().get(0).getTemp().getMin());
+        tempMaxCurrent = (int) Float.parseFloat(weatherCity.getList().get(0).getTemp().getMax());
+
         tvTemperatureMinCurrent.setText(tempMinCurrent + "\u00b0");
         tvTemperatureMaxCurrent.setText(tempMaxCurrent + "\u00b0");
+
         tvDescriptionCurrent.setText(current.getWeather().get(0).getMain());
     }
 
@@ -136,14 +111,14 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 for (List list : weatherCity.getList()) {
                     NextDayModel.list.add(new NextDayModel(
-                            "http://openweathermap.org/img/w/"
-                                    + list.getWeather().get(0).getIcon().toString()
-                                    + ".png",
+                            list.getWeather().get(0).getId(),
                             list.getWeather().get(0).getMain(),
                             list.getTemp().getMax(),
-                            list.getTemp().getMin()));
+                            list.getTemp().getMin(),
+                            list.getDt()
+                       ));
                     adapter.notifyDataSetChanged();
-                    Log.d(TAG, String.format("onResponse: %s", list.getWeather().get(0).getIcon()));
+//                    Log.d(TAG, String.format("onResponse: %s", list.getDt()));
                 }
             }
         });
@@ -151,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getTimeCurrent() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd");
         String currentTime = dateFormat.format(new Date());
         tvDateCurrent.setText("Today, " + currentTime);
     }
@@ -169,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
+//        if (weatherCity == null){
+//            NextDayModel.list.clear();
+//        }
+//        setupUI();
+//        loadDatatoAdapter();
     }
 
 
@@ -176,14 +156,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-
+//        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop: ");
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -215,14 +195,23 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.action_map){
-            double latitude = 40.714728;
-            double longitude = -73.998672;
-            String uriBegin = "geo:" + latitude + "," + longitude;
-            Uri uri = Uri.parse(uriBegin);
-            Intent intent = new Intent(android.content.Intent.ACTION_VIEW, uri);
-            startActivity(intent);
+
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        System.exit(0);
+    }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK){
+//            finish();
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="82.5dp"
+    android:layout_height="82dp"
 
     android:orientation="horizontal">
     <LinearLayout
@@ -31,7 +31,7 @@
                 android:textSize="22.5sp"
                 android:id="@+id/tv_date"
                 android:text="Tomorrow"
-                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -44,8 +44,9 @@
             <TextView
                 android:textSize="22.5sp"
                 android:id="@+id/tv_description"
-                android:textColor="#d1b6b6"
+                android:textColor="@color/secondary_text"
                 android:text="Clear"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -59,7 +60,9 @@
         <TextView
             android:id="@+id/tv_temperature_max"
             android:text="17"
-            android:textSize="37.5sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/primary_text"
+            android:textSize="42dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -72,7 +75,7 @@
             android:id="@+id/tv_temperature_min"
             android:textSize="37.5sp"
             android:text="13"
-            android:textColor="#d1b6b6"
+            android:fontFamily="sans-serif-light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
