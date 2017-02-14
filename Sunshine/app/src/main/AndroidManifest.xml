@@ -28,15 +28,15 @@
         <service android:name=".services.LoadDataCurrentDayWeather" />
         <service android:name=".services.LoadDataNextDayWeather" />
         <service android:name=".services.LoadLocationCityGPS" />
+        <service android:name=".services.NotificationService"/>
 
         <activity android:name=".activitis.DetailActivity" />
-        <activity android:name=".activitis.SettingActivity" />
         <activity
             android:name=".activitis.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.Forecast"
-            ></activity>
+            android:theme="@style/AppTheme.Forecast" />
+        <activity android:name=".activitis.SettingActivity"></activity>
     </application>
 
 </manifest>

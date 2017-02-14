@@ -2,6 +2,8 @@ package vn.tranthanhtu.sunshine.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,7 +23,8 @@ import static android.content.ContentValues.TAG;
  */
 
 public class LoadDataCurrentDayWeather extends IntentService {
-
+    SharedPreferences preferences;
+    String q;
 
     public LoadDataCurrentDayWeather() {
         super("LoadDataCurrentDayWeather");
@@ -29,6 +32,7 @@ public class LoadDataCurrentDayWeather extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.openweathermap.org")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -37,7 +41,13 @@ public class LoadDataCurrentDayWeather extends IntentService {
         APIOpenWeatherCurrentDay service = retrofit.create(APIOpenWeatherCurrentDay.class);
 
         String appid = "66f5fe4f80f450d73ad7f7cd100f95b6";
-        String q = "hanoi";
+        if (preferences.getString("location", "location").equals("location")){
+            q = "hanoi";
+        }else {
+            q = preferences.getString("location", "location");
+        }
+//
+//        q = "hanoi";
 
         service.getWeatherCityCurrent(q, appid).enqueue(new Callback<WeatherCityCurrent>() {
             @Override

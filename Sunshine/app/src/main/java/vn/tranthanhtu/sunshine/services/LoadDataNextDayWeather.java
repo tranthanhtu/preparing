@@ -2,6 +2,8 @@ package vn.tranthanhtu.sunshine.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,6 +23,9 @@ import static android.content.ContentValues.TAG;
  */
 
 public class LoadDataNextDayWeather extends IntentService {
+    SharedPreferences preferences;
+    String q;
+    String units;
 
     public LoadDataNextDayWeather() {
         super("LoadDataNextDayWeather");
@@ -28,14 +33,28 @@ public class LoadDataNextDayWeather extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.openweathermap.org")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         APIOpenWeather service = retrofit.create(APIOpenWeather.class);
-        String q = "hanoi";
-        String units = "metric";
+
+        if (preferences.getString("location", "location").equals("location")
+                && preferences.getString("units", "units").equals("units")){
+            q = "hanoi";
+            units = "metric";
+
+        }else {
+            q = preferences.getString("location", "location");
+            units = preferences.getString("units", "units");
+        }
+        Log.d(TAG, "onHandleIntent: " + q);
+//        q = "hanoi";
+//        String units = preferences.getString("units", "units");
+//        String units = "metric";
+        Log.d(TAG, "onHandleIntent: " + units);
         String cnt = "15";
         String appid = "66f5fe4f80f450d73ad7f7cd100f95b6";
 

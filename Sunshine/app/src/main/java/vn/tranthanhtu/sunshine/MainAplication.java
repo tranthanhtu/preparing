@@ -19,6 +19,7 @@ public class MainAplication extends Application {
         super.onCreate();
         NetworkManager.init(this);
         RealmHandle.init(this);
+
         Intent intent = new Intent(this, LoadDataCurrentDayWeather.class);
         startService(intent);
         Intent intent1 = new Intent(this, LoadDataNextDayWeather.class);

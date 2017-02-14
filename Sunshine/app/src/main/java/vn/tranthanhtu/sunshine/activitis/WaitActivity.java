@@ -1,7 +1,9 @@
 package vn.tranthanhtu.sunshine.activitis;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -15,15 +17,22 @@ import vn.tranthanhtu.sunshine.eventbus.CloseAppEvent;
 import vn.tranthanhtu.sunshine.eventbus.LoadDataCurrentDaySuccessEvent;
 import vn.tranthanhtu.sunshine.eventbus.LoadDataNextDaySuccessEvent;
 import vn.tranthanhtu.sunshine.networks.NetworkManager;
+import vn.tranthanhtu.sunshine.services.NotificationService;
 
 public class WaitActivity extends AppCompatActivity {
 
     public static final String TAG = WaitActivity.class.toString();
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        if (getIntent().getBooleanExtra("EXIT", false))
+//        {
+//            finish();
+//        }
         setContentView(R.layout.activity_wait);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (NetworkManager.getInstance().isConnectedToInternet()){
             EventBus.getDefault().register(this);
 
@@ -51,6 +60,13 @@ public class WaitActivity extends AppCompatActivity {
         if (baseEvent instanceof LoadDataNextDaySuccessEvent) {
             Intent intent = new Intent(WaitActivity.this, MainActivity.class);
             startActivity(intent);
+            Log.d(TAG, "onDataNextDay: " + preferences.getBoolean("enable_notifications", false));;
+            if (preferences.getBoolean("enable_notifications", false) == true){
+                startService(new Intent(this, NotificationService.class));
+            }
+            else {
+                Log.d(TAG, "Notification not able!!!");
+            }
         }else {
 
         }
