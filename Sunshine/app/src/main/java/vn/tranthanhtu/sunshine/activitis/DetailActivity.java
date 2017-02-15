@@ -61,7 +61,8 @@ public class DetailActivity extends AppCompatActivity {
                 detail.getDeg());
         tvWindDetail.setText(windString);
 
-        String dateString1 = new SimpleDateFormat("EEEE, MMMM d").format(new Date(detail.getDt() * 1000));
+        String dateString1 = new SimpleDateFormat("EEEE, MMMM d")
+                .format(new Date(detail.getDt() * 1000));
         tvTimeDate.setText(dateString1);
 
     }

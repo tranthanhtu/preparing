@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences preferences;
 
 
-
     WeatherCity weatherCity;
     WeatherCityCurrent current;
     RecyclerView rvNextDay;
@@ -57,20 +56,12 @@ public class MainActivity extends AppCompatActivity {
         weatherCity = RealmHandle.getInstances().getWeatherCity();
         current = RealmHandle.getInstances().getWeatherCityCurrent();
         Log.d(TAG, "onCreate: ");
-//        Log.d(TAG, String.format("onCreate: %s", weatherCity.getList().get(0).getDt()));
         setReferences();
         setupUI();
         setAdapter();
         loadDatatoAdapter();
         getTimeCurrent();
         addListeners();
-
-
-//        loadDatatoAdapter();
-//        setupUI();
-//        getDataFromAPICurrentDay();
-//        getDataFromAPINextDay();
-
     }
 
     private void addListeners() {
@@ -98,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupUI() {
-        Log.d(TAG, "setupUI: "+ current.getWeather().get(0).getId());
+        Log.d(TAG, "setupUI: " + current.getWeather().get(0).getId());
         imvIconWeatherCurrent.setImageResource(SunshineWeatherUtils
                 .getLargeArtResourceIdForWeatherCondition(current.getWeather().get(0).getId()));
         tempMinCurrent = (int) Float.parseFloat(weatherCity.getList().get(0).getTemp().getMin());
@@ -121,9 +112,8 @@ public class MainActivity extends AppCompatActivity {
                             list.getTemp().getMax(),
                             list.getTemp().getMin(),
                             list.getDt()
-                       ));
+                    ));
                     adapter.notifyDataSetChanged();
-//                    Log.d(TAG, String.format("onResponse: %s", list.getDt()));
                 }
             }
         });
@@ -149,11 +139,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
-//        if (weatherCity == null){
-//            NextDayModel.list.clear();
-//        }
-//        setupUI();
-//        loadDatatoAdapter();
     }
 
 
@@ -161,14 +146,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-//        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop: ");
-//        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -194,18 +177,18 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings){
+        if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingActivity.class);
             startActivity(intent);
             return true;
         }
-        if (id == R.id.action_map){
+        if (id == R.id.action_map) {
             preferences = PreferenceManager.getDefaultSharedPreferences(this);
-            String location = preferences.getString( "location", "location");
+            String location = preferences.getString("location", "location");
             String units = preferences.getString("units", "units");
             Boolean enable_notifications = preferences.getBoolean("enable_notifications", false);
 
-            Toast.makeText(this, location + " " + units + " " + enable_notifications , Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, location + " " + units + " " + enable_notifications, Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -213,18 +196,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(MainActivity.this, WaitActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("EXIT", false);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK){
-//            finish();
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
 }

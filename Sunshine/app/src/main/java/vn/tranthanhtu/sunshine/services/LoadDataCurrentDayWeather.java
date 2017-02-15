@@ -46,8 +46,6 @@ public class LoadDataCurrentDayWeather extends IntentService {
         }else {
             q = preferences.getString("location", "location");
         }
-//
-//        q = "hanoi";
 
         service.getWeatherCityCurrent(q, appid).enqueue(new Callback<WeatherCityCurrent>() {
             @Override

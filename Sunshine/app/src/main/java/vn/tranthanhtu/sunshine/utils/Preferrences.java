@@ -15,9 +15,6 @@ public class Preferrences {
     public static final String KEY_UNITS = "units";
     public static final String UNIT_DEFAUT = "metric";
 
-    public static final String KEY_ENABLE_NOTIFICATION = "enable_notifications";
-    public static final Boolean ENABLE_DEFAUT = true;
-
     private SharedPreferences sharedPreferences;
 
     public Preferrences(Context context) {

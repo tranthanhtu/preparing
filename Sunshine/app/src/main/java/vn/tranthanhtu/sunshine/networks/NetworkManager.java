@@ -21,7 +21,8 @@ public class NetworkManager {
     }
 
     private NetworkManager(Context context) {
-        this.connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        this.connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
     public boolean isConnectedToInternet() {

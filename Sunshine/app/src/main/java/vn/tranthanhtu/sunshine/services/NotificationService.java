@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
 import vn.tranthanhtu.sunshine.R;
+import vn.tranthanhtu.sunshine.activitis.MainActivity;
 import vn.tranthanhtu.sunshine.managers.RealmHandle;
 import vn.tranthanhtu.sunshine.models.APImodels.WeatherCity;
 import vn.tranthanhtu.sunshine.models.APImodels.modelNextDay.List;
@@ -39,7 +40,10 @@ public class NotificationService extends Service {
         weatherCity = RealmHandle.getInstances().getWeatherCity();
         List list = weatherCity.getList().get(0);
         String shortDescription = SunshineWeatherUtils
-                .getStringForWeatherCondition(getApplicationContext(), list.getWeather().get(0).getId());
+                .getStringForWeatherCondition(
+                        getApplicationContext(),
+                        list.getWeather().get(0).getId()
+                );
         Resources resources = getApplicationContext().getResources();
         int largeArtResourceId = SunshineWeatherUtils
                 .getLargeArtResourceIdForWeatherCondition(list.getWeather().get(0).getId());
@@ -52,7 +56,7 @@ public class NotificationService extends Service {
         NotificationManager notificationManager = (NotificationManager) getApplicationContext()
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent repeat_intent = new Intent(getApplicationContext(), NotificationService.class);
+        Intent repeat_intent = new Intent(getApplicationContext(), MainActivity.class);
 
         repeat_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

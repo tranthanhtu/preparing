@@ -51,9 +51,6 @@ public class LoadDataNextDayWeather extends IntentService {
             units = preferences.getString("units", "units");
         }
         Log.d(TAG, "onHandleIntent: " + q);
-//        q = "hanoi";
-//        String units = preferences.getString("units", "units");
-//        String units = "metric";
         Log.d(TAG, "onHandleIntent: " + units);
         String cnt = "15";
         String appid = "66f5fe4f80f450d73ad7f7cd100f95b6";
@@ -65,7 +62,6 @@ public class LoadDataNextDayWeather extends IntentService {
                 RealmHandle.getInstances().addWeatherCity(weatherCity);
                 EventBus.getDefault().post(new LoadDataNextDaySuccessEvent(weatherCity));
                 Log.d(TAG, "onResponse: nextday");
-
             }
 
             @Override
