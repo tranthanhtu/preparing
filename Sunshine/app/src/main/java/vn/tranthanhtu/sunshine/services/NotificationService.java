@@ -1,8 +1,8 @@
 package vn.tranthanhtu.sunshine.services;
 
+import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -26,8 +26,18 @@ import vn.tranthanhtu.sunshine.utils.SunshineWeatherUtils;
  * Created by Dell latitude E6520 on 2/13/2017.
  */
 
-public class NotificationService extends Service {
+public class NotificationService extends IntentService {
     WeatherCity weatherCity;
+
+    /**
+     * Creates an IntentService.  Invoked by your subclass's constructor.
+     *
+     * @param name Used to name the worker thread, important only for debugging.
+     */
+    public NotificationService(String name) {
+        super(name);
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -35,8 +45,7 @@ public class NotificationService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    protected void onHandleIntent(Intent intent) {
         weatherCity = RealmHandle.getInstances().getWeatherCity();
         List list = weatherCity.getList().get(0);
         String shortDescription = SunshineWeatherUtils
@@ -85,6 +94,11 @@ public class NotificationService extends Service {
         builder.setSound(alarmSound);
 
         notificationManager.notify(100, builder.build());
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
     }
 

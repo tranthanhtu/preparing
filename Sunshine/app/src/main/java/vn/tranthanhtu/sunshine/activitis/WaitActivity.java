@@ -16,29 +16,38 @@ import vn.tranthanhtu.sunshine.eventbus.BaseEvent;
 import vn.tranthanhtu.sunshine.eventbus.CloseAppEvent;
 import vn.tranthanhtu.sunshine.eventbus.LoadDataCurrentDaySuccessEvent;
 import vn.tranthanhtu.sunshine.eventbus.LoadDataNextDaySuccessEvent;
+import vn.tranthanhtu.sunshine.managers.RealmHandle;
+import vn.tranthanhtu.sunshine.models.APImodels.WeatherCity;
+import vn.tranthanhtu.sunshine.models.APImodels.WeatherCityCurrent;
 import vn.tranthanhtu.sunshine.networks.NetworkManager;
 
 public class WaitActivity extends AppCompatActivity {
 
     public static final String TAG = WaitActivity.class.toString();
     SharedPreferences preferences;
+    WeatherCity weatherCity;
+    WeatherCityCurrent weatherCityCurrent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (getIntent().getBooleanExtra("EXIT", false))
-        {
-            finish();
-        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        weatherCity = RealmHandle.getInstances().getWeatherCity();
+        weatherCityCurrent = RealmHandle.getInstances().getWeatherCityCurrent();
+
         if (NetworkManager.getInstance().isConnectedToInternet()){
             EventBus.getDefault().register(this);
 
         }else {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            Toast.makeText(this, "No Internet Access!", Toast.LENGTH_SHORT).show();
+            if (weatherCity != null && weatherCityCurrent !=null){
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                Toast.makeText(this, "No Internet Access!", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(this, "No data!!!", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
@@ -52,7 +61,6 @@ public class WaitActivity extends AppCompatActivity {
 
         }
     }
-
 
     @Subscribe
     void onDataNextDay(BaseEvent baseEvent) {
