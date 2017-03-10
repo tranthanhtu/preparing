@@ -5,40 +5,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import vn.tranthanhtu.cudermovenew.R;
 import vn.tranthanhtu.cudermovenew.controllers.MapAdapter;
 import vn.tranthanhtu.cudermovenew.controllers.RecyclerItemClickListener;
+import vn.tranthanhtu.cudermovenew.models.Constants;
 import vn.tranthanhtu.cudermovenew.models.MapModel;
 import vn.tranthanhtu.cudermovenew.utils.AnimationUtils;
 import vn.tranthanhtu.cudermovenew.utils.ConvertLocationUtils;
 import vn.tranthanhtu.cudermovenew.utils.LoadMapRandom;
 import vn.tranthanhtu.cudermovenew.utils.NotificationUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerItemClickListener.OnItemClickListener {
 
     private static final String TAG = MainActivity.class.toString();
-    private static final int SPAN_COUNT = 14;
-    private static final String MOVE_LEFT = "moveLeft";
-    private static final String MOVE_RIGHT = "moveRight";
-    private static final String MOVE_UP = "moveUp";
-    private static final String MOVE_DOWN = "moveDown";
 
-    private StringBuilder stringBuilder;
     private RecyclerView rvMap;
     private ImageView imvCuder;
 
@@ -52,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
     private int positionCurrent;
     private MapAdapter adapter;
 
+    private LinearLayout llRow;
+    private LinearLayout llColumn;
+
     private final ArrayList<String> listMove = new ArrayList<>();
     private ListView lvMove;
     private ArrayAdapter adapterListMove;
 
     private TextView tvLocationStart;
-    private EditText edtLocationEnd;
+    private TextView tvLocationEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +59,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getReferences();
-//        getMapFromText();
         LoadMapRandom.loadRandomMap(this);
+        setRowMap();
+        setColumMap();
 
         setAdapterListMove();
         setAdapter();
@@ -75,7 +70,31 @@ public class MainActivity extends AppCompatActivity {
         addListenerStartMove();
         addListenerMap();
 
+    }
 
+    private void setColumMap() {
+        for (int i = Constants.FIRST_NUMBER_APHABET;
+             i < Constants.FIRST_NUMBER_APHABET + Constants.SPAN_COUNT;
+             i++
+                ) {
+            TextView textView = new TextView(this);
+            textView.setGravity(Gravity.CENTER);
+            textView.setText(String.valueOf((char) i));
+            textView.setHeight(Constants.HEIGHT_ITEM_MAP);
+            textView.setWidth(Constants.WIDTH_ITEM_MAP);
+            llColumn.addView(textView);
+        }
+    }
+
+    private void setRowMap() {
+        for (int i = 1; i <= Constants.SPAN_COUNT; i++) {
+            TextView textView = new TextView(this);
+            textView.setGravity(Gravity.CENTER);
+            textView.setText(String.valueOf(i));
+            textView.setHeight(Constants.HEIGHT_ITEM_MAP);
+            textView.setWidth(Constants.WIDTH_ITEM_MAP);
+            llRow.addView(textView);
+        }
     }
 
 
@@ -83,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edtLocationEnd.length() != 0) {
-                    AnimationUtils.playAnimation(listMove, imvCuder, adapter, getApplicationContext(), edtLocationEnd.getText().toString());
+                if (tvLocationEnd.length() != 0) {
+                    AnimationUtils.playAnimation(listMove, imvCuder, adapter, getApplicationContext(), tvLocationEnd.getText().toString());
                     Log.d(TAG, String.format("onClick: %s", positionCurrent));
                 } else {
-                    NotificationUtils.notification("Nhập vị trí phòng họp cần tới"
+                    NotificationUtils.notification(Constants.NOTI_INSERT_LOCATION_START
                             , getApplicationContext()
                     );
                 }
@@ -96,34 +115,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addListenerMap() {
-        rvMap.addOnItemTouchListener(new RecyclerItemClickListener(this,
-                new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                        positionCurrent = position + 1;
-                        Log.d(TAG, String.format("onItemClick: %s", position));
-                        String optionSquare = MapModel.list.get(position).getSquare();
-                        switch (optionSquare) {
-                            case "2":
-                                NotificationUtils.notification(
-                                        "Đây là vị trí phòng họp! Nhập lại vị trí bắt đầu",
-                                        getApplicationContext());
-                                break;
-                            case "1":
-                                NotificationUtils.notification(
-                                        "Đây là vị trí chướng ngại vật! Nhập lại vị trí ban đầu",
-                                        getApplicationContext());
-                                break;
-                            case "0":
-                                ConvertLocationUtils.setLocationStart(position, imvCuder);
-                                String locationText =
-                                        ConvertLocationUtils.convertPositionToString(position);
-                                tvLocationStart.setText(locationText);
-                                imvCuder.setVisibility(View.VISIBLE);
-                                break;
-                        }
-                    }
-                }));
+        rvMap.addOnItemTouchListener(new RecyclerItemClickListener(this, this));
+
     }
 
     private void getReferences() {
@@ -143,52 +136,26 @@ public class MainActivity extends AppCompatActivity {
 
         lvMove = (ListView) findViewById(R.id.lv_move);
 
-        edtLocationEnd = (EditText) findViewById(R.id.edt_location_end);
+        tvLocationEnd = (TextView) findViewById(R.id.tv_location_end);
+
+        llRow = (LinearLayout) findViewById(R.id.ll_row);
+        llColumn = (LinearLayout) findViewById(R.id.ll_column);
     }
 
     private void setAdapter() {
-        GridLayoutManager layoutManager = new GridLayoutManager(MainActivity.this, SPAN_COUNT);
+        GridLayoutManager layoutManager = new GridLayoutManager(MainActivity.this, Constants.SPAN_COUNT);
         rvMap.setHasFixedSize(true);
         rvMap.setLayoutManager(layoutManager);
         adapter = new MapAdapter();
         rvMap.setAdapter(adapter);
     }
 
-    private void getMapFromText() {
-        try {
-            List<String> listNameMap = new ArrayList<>();
-            String [] list;
-            list = getAssets().list("maps");
-            for (String nameMap: list){
-                Log.d(TAG, String.format("getMapFromText: list file map %s", nameMap));
-                listNameMap.add(nameMap);
-            }
-            Log.d(TAG, String.format("getMapFromText: Map: %s", listNameMap.get(new Random().nextInt(listNameMap.size()))));
-
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(getAssets().open("maps/" + listNameMap.get(new Random().nextInt(listNameMap.size()))), "UTF-8")
-            );
-            stringBuilder = new StringBuilder();
-            String mLine;
-            while ((mLine = reader.readLine()) != null) {
-                Log.d(TAG, String.format("onCreate: %s", mLine));
-                stringBuilder.append(mLine);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.d(TAG, String.format("getMapFromText: %s", stringBuilder.length()));
-        Log.d(TAG, String.format("getMapFromText: %s", stringBuilder.substring(0, 1)));
-        for (int i = 0; i <= stringBuilder.length() - 1; i++) {
-            MapModel.list.add(new MapModel(stringBuilder.substring(i, i + 1)));
-        }
-    }
 
     private void addListenerMove() {
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listMove.add(MOVE_LEFT);
+                listMove.add(Constants.MOVE_LEFT);
                 adapterListMove.notifyDataSetChanged();
             }
         });
@@ -196,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listMove.add(MOVE_RIGHT);
+                listMove.add(Constants.MOVE_RIGHT);
                 adapterListMove.notifyDataSetChanged();
             }
         });
@@ -204,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listMove.add(MOVE_UP);
+                listMove.add(Constants.MOVE_UP);
                 adapterListMove.notifyDataSetChanged();
             }
         });
@@ -212,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listMove.add(MOVE_DOWN);
+                listMove.add(Constants.MOVE_DOWN);
                 adapterListMove.notifyDataSetChanged();
             }
         });
@@ -244,4 +211,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(View childView, int position) {
+        Log.d(TAG, "onItemClick: ");
+        positionCurrent = position + Constants.DIFFERENCE_POSITION_IN_LIST;
+        Log.d(TAG, String.format("onItemClick: %s", position));
+        String optionSquare = MapModel.list.get(position).getSquare();
+        switch (optionSquare) {
+            case Constants.MEETING:
+                NotificationUtils.notification(
+                        Constants.NOTI_CLICK_MEETING,
+                        getApplicationContext());
+                break;
+            case Constants.IMPEDIMENT:
+                NotificationUtils.notification(
+                        Constants.NOTI_CLICK_IMPEDIMENT,
+                        getApplicationContext());
+                break;
+            case Constants.WAY:
+                ConvertLocationUtils.setLocationStart(position, imvCuder);
+                String locationText =
+                        ConvertLocationUtils.convertPositionToString(position);
+                tvLocationStart.setText(locationText);
+                imvCuder.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    @Override
+    public void onItemLongPress(View childView, int position) {
+        Log.d(TAG, "onItemLongPress: ");
+        String locationEnd = ConvertLocationUtils
+                .convertPositionToString(ConvertLocationUtils.convertToLocation
+                        (
+                                childView.getX(),
+                                childView.getY() + Constants.HEIGHT_ITEM_MAP
+                        )
+                );
+        Log.d(TAG, String.format("onItemLongPress: %s", locationEnd));
+        tvLocationEnd.setText(locationEnd);
+    }
 }

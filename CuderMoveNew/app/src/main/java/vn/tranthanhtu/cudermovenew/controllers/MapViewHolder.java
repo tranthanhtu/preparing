@@ -6,30 +6,31 @@ import android.view.View;
 import android.widget.TextView;
 
 import vn.tranthanhtu.cudermovenew.R;
+import vn.tranthanhtu.cudermovenew.models.Constants;
 import vn.tranthanhtu.cudermovenew.models.MapModel;
 
 class MapViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvSquare;
-
     MapViewHolder(View itemView) {
         super(itemView);
         tvSquare = (TextView) itemView.findViewById(R.id.tv_square);
     }
 
-    void bind(MapModel mapModel){
-        if (mapModel.getSquare().equals("0")){
-            tvSquare.setText("");
+    public void bind(MapModel mapModel){
+        if (TextUtils.equals(mapModel.getSquare(), Constants.WAY)){
+            tvSquare.setText(Constants.NULL_TEXT);
             tvSquare.setBackgroundResource(android.R.color.white);
-        }if (TextUtils.equals(mapModel.getSquare(), "1")){
-            tvSquare.setText("");
+        }if (TextUtils.equals(mapModel.getSquare(), Constants.IMPEDIMENT)){
+            tvSquare.setText(Constants.NULL_TEXT);
             tvSquare.setBackgroundResource(android.R.color.holo_blue_bright);
-        }if (mapModel.getSquare().equals("2")){
-            tvSquare.setText("");
+        }if (TextUtils.equals(mapModel.getSquare(), Constants.MEETING)){
+            tvSquare.setText(Constants.NULL_TEXT);
             tvSquare.setBackgroundResource(R.color.colorAccent);
-        }if (mapModel.getSquare().equals("3")){
-            tvSquare.setText("");
+        }if (TextUtils.equals(mapModel.getSquare(), Constants.WAY_WILL_GO)){
+            tvSquare.setText(Constants.NULL_TEXT);
             tvSquare.setBackgroundResource(R.color.move_step);
         }
+
     }
 
 

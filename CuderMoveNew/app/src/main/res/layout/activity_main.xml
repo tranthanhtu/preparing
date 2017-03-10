@@ -6,188 +6,190 @@
     tools:context="vn.tranthanhtu.cudermovenew.views.MainActivity">
 
     <LinearLayout
+        android:id="@+id/ll_row"
         android:orientation="vertical"
         android:layout_marginTop="31.5dp"
         android:layout_width="31.5dp"
-        android:layout_height="441dp">
-        <TextView
-            android:gravity="center"
-            android:text="@string/_1"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_2"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_3"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_4"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_5"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_6"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_7"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_8"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_9"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_10"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_11"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_12"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_13"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:gravity="center"
-            android:text="@string/_14"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
+        android:layout_height="wrap_content">
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_1"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_2"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_3"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_4"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_5"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_6"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_7"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_8"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_9"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_10"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_11"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_12"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_13"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
+        <!--<TextView-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/_14"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp" />-->
 
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_column"
         android:orientation="horizontal"
         android:layout_marginLeft="31.5dp"
-        android:layout_width="441dp"
+        android:layout_width="wrap_content"
         android:layout_height="31.5dp"
         tools:ignore="RtlHardcoded">
-        <TextView
-            android:text="@string/a"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/b"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/c"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/d"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/e"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/f"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/g"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/h"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/i"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/j"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/k"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/l"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/m"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:text="@string/n"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+        <!--<TextView-->
+            <!--android:text="@string/a"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/b"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/c"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/d"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/e"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/f"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/g"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/h"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/i"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/j"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/k"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/l"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/m"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="@string/n"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent" />-->
 
     </LinearLayout>
     
@@ -322,10 +324,9 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" >
-                    <EditText
-                        android:inputType="textCapCharacters"
+                    <TextView
                         android:gravity="center_vertical"
-                        android:id="@+id/edt_location_end"
+                        android:id="@+id/tv_location_end"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         tools:ignore="LabelFor" />
