@@ -36,7 +36,6 @@ public final class AnimationUtils {
             }
             else if (listMove.get(count).equals(Constants.MOVE_RIGHT)) {
                 addAnimatorRight(imageView, count);
-
             }
             else if (listMove.get(count).equals(Constants.MOVE_UP)) {
                 addAnimatorUp(imageView, count);

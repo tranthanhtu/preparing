@@ -10,4 +10,5 @@
     <string name="end">Vị trí phòng họp cần tới</string>
     <string name="btn_start">bắt đầu</string>
     <string name="btn_randomMap">random map</string>
+    <string name="reset">RESET</string>
 </resources>

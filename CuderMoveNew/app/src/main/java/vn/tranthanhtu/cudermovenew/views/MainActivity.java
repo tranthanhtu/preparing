@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import vn.tranthanhtu.cudermovenew.R;
 import vn.tranthanhtu.cudermovenew.controllers.MapAdapter;
 import vn.tranthanhtu.cudermovenew.controllers.RecyclerItemClickListener;
+import vn.tranthanhtu.cudermovenew.controllers.Simulation;
 import vn.tranthanhtu.cudermovenew.models.Constants;
 import vn.tranthanhtu.cudermovenew.models.MapModel;
 import vn.tranthanhtu.cudermovenew.utils.AnimationUtils;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
     private Button btnClear;
     private Button btnStart;
     private Button btnRandomMap;
+    private Button btnReset;
     private int positionCurrent;
     private MapAdapter adapter;
 
@@ -53,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
     private TextView tvLocationStart;
     private TextView tvLocationEnd;
 
+    private int positionStart;
+    private int positionEnd;
+
+    public static final ArrayList<Integer> listStepMovePosition = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +75,30 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         addListenerMove();
         addListenerStartMove();
         addListenerMap();
+    }
 
+    private void getReferences() {
+        rvMap = (RecyclerView) findViewById(R.id.rv_map);
+
+        imvCuder = (ImageView) findViewById(R.id.imv_cuder);
+
+        tvLocationStart = (TextView) findViewById(R.id.location_start);
+
+        btnDown = (Button) findViewById(R.id.btn_down);
+        btnLeft = (Button) findViewById(R.id.btn_left);
+        btnRight = (Button) findViewById(R.id.btn_right);
+        btnUp = (Button) findViewById(R.id.btn_up);
+        btnClear = (Button) findViewById(R.id.btn_clear);
+        btnStart = (Button) findViewById(R.id.btnStart);
+        btnRandomMap = (Button) findViewById(R.id.btn_randomMap);
+        btnReset = (Button) findViewById(R.id.btn_reset);
+
+        lvMove = (ListView) findViewById(R.id.lv_move);
+
+        tvLocationEnd = (TextView) findViewById(R.id.tv_location_end);
+
+        llRow = (LinearLayout) findViewById(R.id.ll_row);
+        llColumn = (LinearLayout) findViewById(R.id.ll_column);
     }
 
     private void setColumMap() {
@@ -97,51 +126,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         }
     }
 
-
-    private void addListenerStartMove() {
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tvLocationEnd.length() != 0) {
-                    AnimationUtils.playAnimation(listMove, imvCuder, adapter, getApplicationContext(), tvLocationEnd.getText().toString());
-                    Log.d(TAG, String.format("onClick: %s", positionCurrent));
-                } else {
-                    NotificationUtils.notification(Constants.NOTI_INSERT_LOCATION_START
-                            , getApplicationContext()
-                    );
-                }
-            }
-        });
-    }
-
-    private void addListenerMap() {
-        rvMap.addOnItemTouchListener(new RecyclerItemClickListener(this, this));
-
-    }
-
-    private void getReferences() {
-        rvMap = (RecyclerView) findViewById(R.id.rv_map);
-
-        imvCuder = (ImageView) findViewById(R.id.imv_cuder);
-
-        tvLocationStart = (TextView) findViewById(R.id.location_start);
-
-        btnDown = (Button) findViewById(R.id.btn_down);
-        btnLeft = (Button) findViewById(R.id.btn_left);
-        btnRight = (Button) findViewById(R.id.btn_right);
-        btnUp = (Button) findViewById(R.id.btn_up);
-        btnClear = (Button) findViewById(R.id.btn_clear);
-        btnStart = (Button) findViewById(R.id.btnStart);
-        btnRandomMap = (Button) findViewById(R.id.btn_randomMap);
-
-        lvMove = (ListView) findViewById(R.id.lv_move);
-
-        tvLocationEnd = (TextView) findViewById(R.id.tv_location_end);
-
-        llRow = (LinearLayout) findViewById(R.id.ll_row);
-        llColumn = (LinearLayout) findViewById(R.id.ll_column);
-    }
-
     private void setAdapter() {
         GridLayoutManager layoutManager = new GridLayoutManager(MainActivity.this, Constants.SPAN_COUNT);
         rvMap.setHasFixedSize(true);
@@ -150,6 +134,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         rvMap.setAdapter(adapter);
     }
 
+    private void setAdapterListMove() {
+        adapterListMove = new ArrayAdapter<>(
+                MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                listMove);
+        lvMove.setAdapter(adapterListMove);
+    }
 
     private void addListenerMove() {
         btnLeft.setOnClickListener(new View.OnClickListener() {
@@ -200,19 +191,46 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
                 LoadMapRandom.loadRandomMap(getApplicationContext());
             }
         });
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listStepMovePosition.clear();
+                listMove.clear();
+                adapterListMove.notifyDataSetChanged();
+                MapModel.list.clear();
+                adapter.notifyDataSetChanged();
+                finish();
+                startActivity(getIntent());
+            }
+        });
     }
 
-    private void setAdapterListMove() {
-        adapterListMove = new ArrayAdapter<>(
-                MainActivity.this,
-                android.R.layout.simple_list_item_1,
-                listMove);
-        lvMove.setAdapter(adapterListMove);
+    private void addListenerStartMove() {
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getShortPath();
+                if (tvLocationEnd.length() != 0) {
+                    AnimationUtils.playAnimation(listMove, imvCuder, adapter, getApplicationContext(), tvLocationEnd.getText().toString());
+                    Log.d(TAG, String.format("onClick: %s", positionCurrent));
+                } else {
+                    NotificationUtils.notification(Constants.NOTI_INSERT_LOCATION_START
+                            , getApplicationContext()
+                    );
+                }
+            }
+        });
     }
 
+    private void addListenerMap() {
+        rvMap.addOnItemTouchListener(new RecyclerItemClickListener(this, this));
+
+    }
 
     @Override
     public void onItemClick(View childView, int position) {
+        positionStart = position;
         Log.d(TAG, "onItemClick: ");
         positionCurrent = position + Constants.DIFFERENCE_POSITION_IN_LIST;
         Log.d(TAG, String.format("onItemClick: %s", position));
@@ -240,7 +258,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
 
     @Override
     public void onItemLongPress(View childView, int position) {
-        Log.d(TAG, "onItemLongPress: ");
+        positionEnd = position;
+        Log.d(TAG, String.format("onItemLongPress: %s", position));
         String locationEnd = ConvertLocationUtils
                 .convertPositionToString(ConvertLocationUtils.convertToLocation
                         (
@@ -250,5 +269,39 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
                 );
         Log.d(TAG, String.format("onItemLongPress: %s", locationEnd));
         tvLocationEnd.setText(locationEnd);
+    }
+
+    private void getShortPath(){
+        Simulation simulation = new Simulation();
+        simulation.cuderGraph();
+        simulation.performBFS(positionStart, positionEnd);
+        simulation.printGraph();
+        Log.d(TAG, String.format("getShortPath: %s", listStepMovePosition));
+        addAutoStepToList();
+
+    }
+
+    private void addAutoStepToList(){
+        for (int i = 0; i < listStepMovePosition.size() - 1; i ++){
+            Log.d(TAG, String.format("addAutoStepToList: i = %s", i));
+            if (listStepMovePosition.get(i + 1) - listStepMovePosition.get(i) == Constants.SPAN_COUNT){
+                listMove.add(Constants.MOVE_DOWN);
+                Log.d(TAG, "addAutoStepToList: DOWN");
+            }else if (listStepMovePosition.get(i) - listStepMovePosition.get(i + 1) == Constants.SPAN_COUNT ){
+                listMove.add(Constants.MOVE_UP);
+                Log.d(TAG, "addAutoStepToList: UP");
+            }else if (listStepMovePosition.get(i + 1) - listStepMovePosition.get(i) == Constants.DIFFERENCE_POSITION_IN_LIST){
+                listMove.add(Constants.MOVE_RIGHT);
+                Log.d(TAG, "addAutoStepToList: RIGHT");
+            }else if (listStepMovePosition.get(i) - listStepMovePosition.get(i + 1) == Constants.DIFFERENCE_POSITION_IN_LIST){
+                listMove.add(Constants.MOVE_LEFT);
+                Log.d(TAG, "addAutoStepToList: LEFT");
+            }
+        }
+        adapterListMove.notifyDataSetChanged();
+        Log.d(TAG, String.format("addAutoStepToList: %s", listMove));
+        if (listMove.size() == 0){
+            NotificationUtils.notification(Constants.NOTI_NO_WAY_TO_MEETING, this);
+        }
     }
 }

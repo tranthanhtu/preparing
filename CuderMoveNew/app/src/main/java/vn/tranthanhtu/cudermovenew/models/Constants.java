@@ -23,6 +23,7 @@ public class Constants {
     public static final String NOTI_CLICK_IMPEDIMENT = "Đây là vị trí chướng ngại vật! Nhập lại vị trí ban đầu";
     public static final String NOTI_GO_MEETING_FAIL = "Oops!Cuder đã bỏ lỡ cuộc họp!";
     public static final String NOTI_GO_MEETING_COMPLETE = "Chúc mừng!Cuder đã tới cuộc họp!";
+    public static final String NOTI_NO_WAY_TO_MEETING = "Không có đường tới phòng họp";
 
     public static final int DELAY_ANIMATION = 1500;
 
