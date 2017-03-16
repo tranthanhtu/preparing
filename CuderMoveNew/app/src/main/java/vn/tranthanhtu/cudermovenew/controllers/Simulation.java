@@ -1,7 +1,5 @@
 package vn.tranthanhtu.cudermovenew.controllers;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,8 +7,6 @@ import java.util.Queue;
 import vn.tranthanhtu.cudermovenew.models.Constants;
 import vn.tranthanhtu.cudermovenew.models.MapModel;
 import vn.tranthanhtu.cudermovenew.views.MainActivity;
-
-import static android.content.ContentValues.TAG;
 
 public class Simulation {
 
@@ -43,7 +39,7 @@ public class Simulation {
         // continue searching the graph while still nodes in the queue
         while (!Q.isEmpty()) {
             int at = Q.poll(); // get the head of the queue
-            System.out.printf("At node %d in the BFS%n", at);
+//            System.out.printf("At node %d in the BFS%n", at);
 
             // add any unseen nodes to the queue to process, then mark them as
             // visited so they don't get re-added
@@ -52,14 +48,14 @@ public class Simulation {
                     Q.offer(i);
                     V[i] = true;
                     tracePath[i] = at;
-                    System.out.printf("Adding node %d to the queue in the BFS%n", i);
+//                    System.out.printf("Adding node %d to the queue in the BFS%n", i);
                 }
             }
 
-            System.out.printf("Done processing node %d%n", at);
+//            System.out.printf("Done processing node %d%n", at);
         }
 
-        System.out.printf("Finished with the BFS from start node %d%n", start);
+//        System.out.printf("Finished with the BFS from start node %d%n", start);
 
         // print path from node start to node finish
         printPath(start, finish, tracePath);
@@ -67,14 +63,14 @@ public class Simulation {
 
     private void printPath(int u, int v, int back[]) {
         if (u == v) {
-            System.out.printf("%d << ", v);
+//            System.out.printf("%d << ", v);
             MainActivity.listStepMovePosition.add(v);
         } else {
             if (back[v] == -1) {
-                System.out.printf("No way from node %d to node %d%n", u, v);
+//                System.out.printf("No way from node %d to node %d%n", u, v);
             } else {
                 printPath(u, back[v], back);
-                System.out.printf("%d << ", v);
+//                System.out.printf("%d << ", v);
                 MainActivity.listStepMovePosition.add(v);
             }
         }
@@ -94,33 +90,6 @@ public class Simulation {
             }
         }
 
-        // set block
-        /**
-         N	a	b	c	d
-         1		x	o
-         2		x
-         3		x
-         4	c
-         */
-        /**
-         0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-         1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0
-         0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0
-         0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0
-         0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-         0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-         0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-         0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0
-         0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0
-         0 0 0 0 0 0 0 0 1 0 1 0 0 1 0 0
-         0 0 0 0 0 0 0 0 0 1 0 1 0 0 1 0
-         0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 1
-         0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0
-         0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 0
-         0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1
-         0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0
-         */
-
         ArrayList<Integer> impediment = new ArrayList<>();
 
         for (int j = 0; j < MapModel.list.size(); j++ ){
@@ -128,7 +97,7 @@ public class Simulation {
                 impediment.add(j);
             }
         }
-        Log.d(TAG, String.format("onCreate: %s", impediment));
+//        Log.d(TAG, String.format("onCreate: %s", impediment));
         for (int i = 0; i < N; i++) {
             for (int j : impediment){
                 G[i][j] = G[j][i] = 0;
@@ -143,12 +112,12 @@ public class Simulation {
     }
 
     public void printGraph() {
-        System.out.println();
+//        System.out.println();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                System.out.printf("%d ", G[i][j]);
+//                System.out.printf("%d ", G[i][j]);
             }
-            System.out.println();
+//            System.out.println();
         }
     }
 

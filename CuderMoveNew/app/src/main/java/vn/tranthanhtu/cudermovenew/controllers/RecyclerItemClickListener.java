@@ -68,33 +68,6 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
     }
 
-    /**
-     * A simple click listener whose methods can be overridden one by one.
-     */
-    public static abstract class SimpleOnItemClickListener implements OnItemClickListener {
-
-        /**
-         * Called when an item is clicked. The default implementation is a no-op.
-         *
-         * @param childView View of the item that was clicked.
-         * @param position  Position of the item that was clicked.
-         */
-        public void onItemClick(View childView, int position) {
-            // Do nothing.
-        }
-
-        /**
-         * Called when an item is long pressed. The default implementation is a no-op.
-         *
-         * @param childView View of the item that was long pressed.
-         * @param position  Position of the item that was long pressed.
-         */
-        public void onItemLongPress(View childView, int position) {
-            // Do nothing.
-        }
-
-    }
-
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override

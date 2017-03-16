@@ -27,38 +27,32 @@ import vn.tranthanhtu.cudermovenew.utils.ConvertLocationUtils;
 import vn.tranthanhtu.cudermovenew.utils.LoadMapRandom;
 import vn.tranthanhtu.cudermovenew.utils.NotificationUtils;
 
-public class MainActivity extends AppCompatActivity implements RecyclerItemClickListener.OnItemClickListener {
+public class MainActivity extends AppCompatActivity
+        implements RecyclerItemClickListener.OnItemClickListener {
 
     private static final String TAG = MainActivity.class.toString();
 
     private RecyclerView rvMap;
+
     private ImageView imvCuder;
 
-    private Button btnLeft;
-    private Button btnRight;
-    private Button btnUp;
-    private Button btnDown;
-    private Button btnClear;
-    private Button btnStart;
-    private Button btnRandomMap;
-    private Button btnReset;
-    private int positionCurrent;
+    private Button btnLeft, btnRight, btnUp, btnDown, btnClear, btnStart, btnRandomMap, btnReset;
+
     private MapAdapter adapter;
 
-    private LinearLayout llRow;
-    private LinearLayout llColumn;
-
-    private final ArrayList<String> listMove = new ArrayList<>();
-    private ListView lvMove;
     private ArrayAdapter adapterListMove;
 
-    private TextView tvLocationStart;
-    private TextView tvLocationEnd;
+    private LinearLayout llRow, llColumn;
 
-    private int positionStart;
-    private int positionEnd;
-
+    private final ArrayList<String> listMove = new ArrayList<>();
     public static final ArrayList<Integer> listStepMovePosition = new ArrayList<>();
+
+    private ListView lvMove;
+
+    private TextView tvLocationStart, tvLocationEnd;
+
+    private int positionStart, positionEnd, positionCurrent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         addListenerMap();
     }
 
+    /* Declare references  */
     private void getReferences() {
         rvMap = (RecyclerView) findViewById(R.id.rv_map);
 
@@ -101,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         llColumn = (LinearLayout) findViewById(R.id.ll_column);
     }
 
+    /* Setup Column Of Map */
     private void setColumMap() {
         for (int i = Constants.FIRST_NUMBER_APHABET;
              i < Constants.FIRST_NUMBER_APHABET + Constants.SPAN_COUNT;
@@ -115,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         }
     }
 
+    /* Setup Row Of Map */
     private void setRowMap() {
         for (int i = 1; i <= Constants.SPAN_COUNT; i++) {
             TextView textView = new TextView(this);
@@ -126,14 +123,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         }
     }
 
+    /* Setup Adapter RecycleView Map  */
     private void setAdapter() {
-        GridLayoutManager layoutManager = new GridLayoutManager(MainActivity.this, Constants.SPAN_COUNT);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, Constants.SPAN_COUNT);
         rvMap.setHasFixedSize(true);
         rvMap.setLayoutManager(layoutManager);
         adapter = new MapAdapter();
         rvMap.setAdapter(adapter);
     }
 
+    /* Setup Adapter List Step Move */
     private void setAdapterListMove() {
         adapterListMove = new ArrayAdapter<>(
                 MainActivity.this,
@@ -142,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         lvMove.setAdapter(adapterListMove);
     }
 
+    /* Setup Click Button: Move && RandomMap && ResetMove  */
     private void addListenerMove() {
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,13 +206,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         });
     }
 
+    /* Setup Click Button Start */
     private void addListenerStartMove() {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getShortPath();
                 if (tvLocationEnd.length() != 0) {
-                    AnimationUtils.playAnimation(listMove, imvCuder, adapter, getApplicationContext(), tvLocationEnd.getText().toString());
+                    AnimationUtils.playAnimation(
+                            listMove,
+                            imvCuder,
+                            adapter,
+                            getApplicationContext(),
+                            tvLocationEnd.getText().toString()
+                    );
                     Log.d(TAG, String.format("onClick: %s", positionCurrent));
                 } else {
                     NotificationUtils.notification(Constants.NOTI_INSERT_LOCATION_START
@@ -223,11 +230,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         });
     }
 
+    /* Setup Click Map */
     private void addListenerMap() {
         rvMap.addOnItemTouchListener(new RecyclerItemClickListener(this, this));
-
     }
 
+    /* Setup Single Click In Map */
     @Override
     public void onItemClick(View childView, int position) {
         positionStart = position;
@@ -256,6 +264,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         }
     }
 
+    /* Setup Long Click In Map */
     @Override
     public void onItemLongPress(View childView, int position) {
         positionEnd = position;
@@ -271,7 +280,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         tvLocationEnd.setText(locationEnd);
     }
 
-    private void getShortPath(){
+    /* Get Short Path By BFS algorithm */
+    private void getShortPath() {
         Simulation simulation = new Simulation();
         simulation.cuderGraph();
         simulation.performBFS(positionStart, positionEnd);
@@ -281,26 +291,30 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
 
     }
 
-    private void addAutoStepToList(){
-        for (int i = 0; i < listStepMovePosition.size() - 1; i ++){
+    /* Get List Step Move From BFS algorithm */
+    private void addAutoStepToList() {
+        for (int i = 0; i < listStepMovePosition.size() - 1; i++) {
             Log.d(TAG, String.format("addAutoStepToList: i = %s", i));
-            if (listStepMovePosition.get(i + 1) - listStepMovePosition.get(i) == Constants.SPAN_COUNT){
+            if (listStepMovePosition.get(i + 1) - listStepMovePosition.get(i)
+                    == Constants.SPAN_COUNT) {
                 listMove.add(Constants.MOVE_DOWN);
-                Log.d(TAG, "addAutoStepToList: DOWN");
-            }else if (listStepMovePosition.get(i) - listStepMovePosition.get(i + 1) == Constants.SPAN_COUNT ){
+            } else if (listStepMovePosition.get(i) - listStepMovePosition.get(i + 1)
+                    == Constants.SPAN_COUNT) {
                 listMove.add(Constants.MOVE_UP);
                 Log.d(TAG, "addAutoStepToList: UP");
-            }else if (listStepMovePosition.get(i + 1) - listStepMovePosition.get(i) == Constants.DIFFERENCE_POSITION_IN_LIST){
+            } else if (listStepMovePosition.get(i + 1) - listStepMovePosition.get(i)
+                    == Constants.DIFFERENCE_POSITION_IN_LIST) {
                 listMove.add(Constants.MOVE_RIGHT);
                 Log.d(TAG, "addAutoStepToList: RIGHT");
-            }else if (listStepMovePosition.get(i) - listStepMovePosition.get(i + 1) == Constants.DIFFERENCE_POSITION_IN_LIST){
+            } else if (listStepMovePosition.get(i) - listStepMovePosition.get(i + 1)
+                    == Constants.DIFFERENCE_POSITION_IN_LIST) {
                 listMove.add(Constants.MOVE_LEFT);
                 Log.d(TAG, "addAutoStepToList: LEFT");
             }
         }
         adapterListMove.notifyDataSetChanged();
         Log.d(TAG, String.format("addAutoStepToList: %s", listMove));
-        if (listMove.size() == 0){
+        if (listMove.size() == 0) {
             NotificationUtils.notification(Constants.NOTI_NO_WAY_TO_MEETING, this);
         }
     }
