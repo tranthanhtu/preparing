@@ -3,9 +3,11 @@ package vn.tranthanhtu.cudermovenew.views;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity
 
     private ArrayAdapter adapterListMove;
 
-    private LinearLayout llRow, llColumn;
+    private LinearLayout llRow, llColumn, llNumberButtonMap;
 
     private final ArrayList<String> listMove = new ArrayList<>();
     public static final ArrayList<Integer> listStepMovePosition = new ArrayList<>();
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity
         LoadMapRandom.loadRandomMap(this);
         setRowMap();
         setColumMap();
+        setButtonOfMap();
 
         setAdapterListMove();
         setAdapter();
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity
         addListenerMove();
         addListenerStartMove();
         addListenerMap();
+
     }
 
     /* Declare references  */
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity
 
         llRow = (LinearLayout) findViewById(R.id.ll_row);
         llColumn = (LinearLayout) findViewById(R.id.ll_column);
+        llNumberButtonMap = (LinearLayout) findViewById(R.id.ll_numberMap);
     }
 
     /* Setup Column Of Map */
@@ -120,6 +125,25 @@ public class MainActivity extends AppCompatActivity
             textView.setHeight(Constants.HEIGHT_ITEM_MAP);
             textView.setWidth(Constants.WIDTH_ITEM_MAP);
             llRow.addView(textView);
+        }
+    }
+
+    /* Setup number Button of Map */
+    private void setButtonOfMap(){
+        for (int i = 1; i <= LoadMapRandom.listNameMap.size(); i++){
+            Button button = new Button(this);
+            button.setText(String.valueOf(i));
+            final int j = i - 1;
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imvCuder.setVisibility(View.INVISIBLE);
+                    MapModel.list.clear();
+                    adapter.notifyDataSetChanged();
+                    LoadMapRandom.loadMap(getApplicationContext(), LoadMapRandom.listNameMap.get(j));
+                }
+            });
+            llNumberButtonMap.addView(button);
         }
     }
 
@@ -188,7 +212,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 MapModel.list.clear();
                 adapter.notifyDataSetChanged();
-                LoadMapRandom.loadRandomMap(getApplicationContext());
+//                LoadMapRandom.loadRandomMap(getApplicationContext());
+                LoadMapRandom.checkRandom(getApplicationContext());
             }
         });
 
@@ -211,8 +236,8 @@ public class MainActivity extends AppCompatActivity
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getShortPath();
                 if (tvLocationEnd.length() != 0) {
+                    getShortPath();
                     AnimationUtils.playAnimation(
                             listMove,
                             imvCuder,
@@ -222,7 +247,7 @@ public class MainActivity extends AppCompatActivity
                     );
                     Log.d(TAG, String.format("onClick: %s", positionCurrent));
                 } else {
-                    NotificationUtils.notification(Constants.NOTI_INSERT_LOCATION_START
+                    NotificationUtils.notification(getString(R.string.NOTI_INSERT_LOCATION_START)
                             , getApplicationContext()
                     );
                 }
@@ -238,46 +263,65 @@ public class MainActivity extends AppCompatActivity
     /* Setup Single Click In Map */
     @Override
     public void onItemClick(View childView, int position) {
-        positionStart = position;
         Log.d(TAG, "onItemClick: ");
-        positionCurrent = position + Constants.DIFFERENCE_POSITION_IN_LIST;
-        Log.d(TAG, String.format("onItemClick: %s", position));
-        String optionSquare = MapModel.list.get(position).getSquare();
-        switch (optionSquare) {
-            case Constants.MEETING:
-                NotificationUtils.notification(
-                        Constants.NOTI_CLICK_MEETING,
-                        getApplicationContext());
-                break;
-            case Constants.IMPEDIMENT:
-                NotificationUtils.notification(
-                        Constants.NOTI_CLICK_IMPEDIMENT,
-                        getApplicationContext());
-                break;
-            case Constants.WAY:
-                ConvertLocationUtils.setLocationStart(position, imvCuder);
-                String locationText =
-                        ConvertLocationUtils.convertPositionToString(position);
-                tvLocationStart.setText(locationText);
-                imvCuder.setVisibility(View.VISIBLE);
-                break;
-        }
     }
 
     /* Setup Long Click In Map */
     @Override
-    public void onItemLongPress(View childView, int position) {
-        positionEnd = position;
-        Log.d(TAG, String.format("onItemLongPress: %s", position));
-        String locationEnd = ConvertLocationUtils
-                .convertPositionToString(ConvertLocationUtils.convertToLocation
-                        (
-                                childView.getX(),
-                                childView.getY() + Constants.HEIGHT_ITEM_MAP
-                        )
-                );
-        Log.d(TAG, String.format("onItemLongPress: %s", locationEnd));
-        tvLocationEnd.setText(locationEnd);
+    public void onItemLongPress(final View childView, final int position) {
+        PopupMenu popup = new PopupMenu(MainActivity.this, childView);
+        //Inflating the Popup using xml file
+        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+        //registering popup with OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getTitle().equals(getString(R.string.locationstart))){
+                    positionStart = position;
+                    Log.d(TAG, "onItemClick: ");
+                    positionCurrent = position + Constants.DIFFERENCE_POSITION_IN_LIST;
+                    Log.d(TAG, String.format("onItemClick: %s", position));
+                    String optionSquare = MapModel.list.get(position).getSquare();
+                    switch (optionSquare) {
+                        case Constants.MEETING:
+                            NotificationUtils.notification(
+                                    getString(R.string.NOTI_CLICK_MEETING),
+                                    getApplicationContext());
+                            break;
+                        case Constants.IMPEDIMENT:
+                            NotificationUtils.notification(
+                                    getString(R.string.NOTI_CLICK_IMPEDIMENT),
+                                    getApplicationContext());
+                            break;
+                        case Constants.WAY:
+                            ConvertLocationUtils.setLocationStart(position, imvCuder);
+                            String locationText =
+                                    ConvertLocationUtils.convertPositionToString(position);
+                            tvLocationStart.setText(locationText);
+                            imvCuder.setVisibility(View.VISIBLE);
+                            break;
+                    }
+                }
+                else if (item.getTitle().equals(getString(R.string.locationend))){
+                    positionEnd = position;
+                    Log.d(TAG, String.format("onItemLongPress: %s", position));
+                    String locationEnd = ConvertLocationUtils
+                            .convertPositionToString(ConvertLocationUtils.convertToLocation
+                                    (
+                                            childView.getX(),
+                                            childView.getY() + Constants.HEIGHT_ITEM_MAP
+                                    )
+                            );
+                    Log.d(TAG, String.format("onItemLongPress: %s", locationEnd));
+                    tvLocationEnd.setText(locationEnd);
+                }
+                return true;
+            }
+        });
+
+        popup.show();//showing popup menu
+
+
     }
 
     /* Get Short Path By BFS algorithm */
@@ -315,7 +359,7 @@ public class MainActivity extends AppCompatActivity
         adapterListMove.notifyDataSetChanged();
         Log.d(TAG, String.format("addAutoStepToList: %s", listMove));
         if (listMove.size() == 0) {
-            NotificationUtils.notification(Constants.NOTI_NO_WAY_TO_MEETING, this);
+            NotificationUtils.notification(getString(R.string.NOTI_NO_WAY_TO_MEETING), this);
         }
     }
 }

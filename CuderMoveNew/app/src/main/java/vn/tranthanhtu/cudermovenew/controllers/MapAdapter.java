@@ -31,4 +31,6 @@ public class MapAdapter extends RecyclerView.Adapter<MapViewHolder> {
     public int getItemCount() {
         return list.size();
     }
+
+
 }

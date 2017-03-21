@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import vn.tranthanhtu.cudermovenew.R;
 import vn.tranthanhtu.cudermovenew.controllers.MapAdapter;
 import vn.tranthanhtu.cudermovenew.models.Constants;
 import vn.tranthanhtu.cudermovenew.models.MapModel;
@@ -56,7 +57,7 @@ public final class AnimationUtils {
                     .getSquare()
                     .equals(Constants.IMPEDIMENT)) {
                 NotificationUtils.notification(
-                        Constants.NOTI_GO_MEETING_FAIL,
+                        context.getString(R.string.NOTI_GO_MEETING_FAIL),
                         context
                 );
                 count = listMove.size() - 1;
@@ -64,7 +65,7 @@ public final class AnimationUtils {
             if (ConvertLocationUtils.convertToLocation(x, y)
                     == ConvertLocationUtils.convertStringToPosition(edt)) {
                 NotificationUtils.notification(
-                        Constants.NOTI_GO_MEETING_COMPLETE,
+                        context.getString(R.string.NOTI_GO_MEETING_COMPLETE),
                         context
                 );
                 count = listMove.size() - 1;

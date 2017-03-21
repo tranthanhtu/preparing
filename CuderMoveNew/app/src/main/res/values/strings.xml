@@ -6,9 +6,17 @@
     <string name="up">up</string>
     <string name="down">down</string>
     <string name="clear">clear</string>
-    <string name="start">Vị trí bắt đầu</string>
-    <string name="end">Vị trí phòng họp cần tới</string>
-    <string name="btn_start">bắt đầu</string>
+    <string name="start">Location starts</string>
+    <string name="end">Meeting room location</string>
+    <string name="btn_start">Start</string>
     <string name="btn_randomMap">random map</string>
     <string name="reset">RESET</string>
+    <string name="NOTI_INSERT_LOCATION_START">Enter the meeting room location to go</string>
+    <string name="NOTI_GO_MEETING_FAIL">Oops! Cuder missed the meeting!</string>
+    <string name="NOTI_GO_MEETING_COMPLETE">Congratulations! Cuder came to the meeting!</string>
+    <string name="NOTI_NO_WAY_TO_MEETING">There is no way to the meeting room</string>
+    <string name="NOTI_CLICK_MEETING">This is the meeting room location! Reenter the starting position</string>
+    <string name="NOTI_CLICK_IMPEDIMENT">This is the obstacle position! Reenter the starting position</string>
+    <string name="locationstart">LocationStart</string>
+    <string name="locationend">LocationEnd</string>
 </resources>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Cuder Đi Họp</string>
+    <string name="cuderimage">CuderImage</string>
+    <string name="left">trái</string>
+    <string name="right">phải</string>
+    <string name="up">lên</string>
+    <string name="down">xuống</string>
+    <string name="clear">xóa</string>
+    <string name="start">Vị trí bắt đầu</string>
+    <string name="end">Vị trí phòng họp cần tới</string>
+    <string name="btn_start">bắt đầu</string>
+    <string name="btn_randomMap">ngẫu nhiên</string>
+    <string name="reset">đặt lại</string>
+    <string name="NOTI_INSERT_LOCATION_START">Nhập vị trí phòng họp cần tới</string>
+    <string name="NOTI_GO_MEETING_FAIL">Oops!Cuder đã bỏ lỡ cuộc họp!</string>
+    <string name="NOTI_GO_MEETING_COMPLETE">Chúc mừng! Cuder đã đến cuộc họp!</string>
+    <string name="NOTI_NO_WAY_TO_MEETING">Không có đường tới phòng họp</string>
+    <string name="NOTI_CLICK_MEETING">Đây là vị trí phòng họp! Nhập lại vị trí bắt đầu</string>
+    <string name="NOTI_CLICK_IMPEDIMENT">Đây là vị trí chướng ngại vật! Nhập lại vị trí bắt đầu</string>
+    <string name="locationstart">Điểm xuất phát</string>
+    <string name="locationend">Điểm đến</string>
+
+</resources>
