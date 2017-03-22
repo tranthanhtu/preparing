@@ -10,7 +10,6 @@
     <string name="end">Vị trí phòng họp cần tới</string>
     <string name="btn_start">bắt đầu</string>
     <string name="btn_randomMap">ngẫu nhiên</string>
-    <string name="reset">đặt lại</string>
     <string name="NOTI_INSERT_LOCATION_START">Nhập vị trí phòng họp cần tới</string>
     <string name="NOTI_GO_MEETING_FAIL">Oops!Cuder đã bỏ lỡ cuộc họp!</string>
     <string name="NOTI_GO_MEETING_COMPLETE">Chúc mừng! Cuder đã đến cuộc họp!</string>

@@ -188,22 +188,17 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/btn_randomMap"
         tools:ignore="RelativeOverlap" />
-    <Button
-        android:layout_below="@id/btn_randomMap"
-        android:text="@string/reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/btn_reset"
-        tools:ignore="RelativeOverlap" />
+
     <LinearLayout
         android:layout_alignParentEnd="true"
         android:orientation="vertical"
-        android:layout_below="@id/btn_reset"
+        android:layout_below="@id/btn_randomMap"
         android:id="@+id/ll_numberMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
     </LinearLayout>
+
+
 
 </RelativeLayout>

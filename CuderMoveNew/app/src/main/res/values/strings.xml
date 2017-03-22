@@ -10,7 +10,6 @@
     <string name="end">Meeting room location</string>
     <string name="btn_start">Start</string>
     <string name="btn_randomMap">random map</string>
-    <string name="reset">RESET</string>
     <string name="NOTI_INSERT_LOCATION_START">Enter the meeting room location to go</string>
     <string name="NOTI_GO_MEETING_FAIL">Oops! Cuder missed the meeting!</string>
     <string name="NOTI_GO_MEETING_COMPLETE">Congratulations! Cuder came to the meeting!</string>

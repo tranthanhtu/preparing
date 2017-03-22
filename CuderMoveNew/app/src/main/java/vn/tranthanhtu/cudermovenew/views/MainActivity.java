@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     private ImageView imvCuder;
 
-    private Button btnLeft, btnRight, btnUp, btnDown, btnClear, btnStart, btnRandomMap, btnReset;
+    private Button btnLeft, btnRight, btnUp, btnDown, btnClear, btnStart, btnRandomMap;
 
     private MapAdapter adapter;
 
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     private TextView tvLocationStart, tvLocationEnd;
 
     private int positionStart, positionEnd, positionCurrent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +91,6 @@ public class MainActivity extends AppCompatActivity
         btnClear = (Button) findViewById(R.id.btn_clear);
         btnStart = (Button) findViewById(R.id.btnStart);
         btnRandomMap = (Button) findViewById(R.id.btn_randomMap);
-        btnReset = (Button) findViewById(R.id.btn_reset);
 
         lvMove = (ListView) findViewById(R.id.lv_move);
 
@@ -137,6 +137,11 @@ public class MainActivity extends AppCompatActivity
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    tvLocationEnd.setText(Constants.NULL_TEXT);
+                    tvLocationStart.setText(Constants.NULL_TEXT);
+                    listStepMovePosition.clear();
+                    listMove.clear();
+                    adapterListMove.notifyDataSetChanged();
                     imvCuder.setVisibility(View.INVISIBLE);
                     MapModel.list.clear();
                     adapter.notifyDataSetChanged();
@@ -210,25 +215,18 @@ public class MainActivity extends AppCompatActivity
         btnRandomMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listStepMovePosition.clear();
+                listMove.clear();
+                adapterListMove.notifyDataSetChanged();
+                tvLocationEnd.setText(Constants.NULL_TEXT);
+                tvLocationStart.setText(Constants.NULL_TEXT);
+                imvCuder.setVisibility(View.INVISIBLE);
                 MapModel.list.clear();
                 adapter.notifyDataSetChanged();
-//                LoadMapRandom.loadRandomMap(getApplicationContext());
                 LoadMapRandom.checkRandom(getApplicationContext());
             }
         });
 
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listStepMovePosition.clear();
-                listMove.clear();
-                adapterListMove.notifyDataSetChanged();
-                MapModel.list.clear();
-                adapter.notifyDataSetChanged();
-                finish();
-                startActivity(getIntent());
-            }
-        });
     }
 
     /* Setup Click Button Start */
@@ -236,7 +234,7 @@ public class MainActivity extends AppCompatActivity
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tvLocationEnd.length() != 0) {
+                if (tvLocationEnd.length() != 0 && tvLocationStart.length() != 0) {
                     getShortPath();
                     AnimationUtils.playAnimation(
                             listMove,
