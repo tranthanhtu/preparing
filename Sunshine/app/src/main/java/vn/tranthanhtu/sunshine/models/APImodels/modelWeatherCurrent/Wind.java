@@ -4,15 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
-/**
- * Created by Dell latitude E6520 on 2/7/2017.
- */
 
+@SuppressWarnings("ALL")
 public class Wind extends RealmObject {
     @SerializedName("speed")
-    public String speed;
+    private String speed;
     @SerializedName("deg")
-    public String deg;
+    private String deg;
 
     public String getSpeed() {
         return speed;

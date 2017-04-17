@@ -3,16 +3,13 @@ package vn.tranthanhtu.sunshine.models;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Dell latitude E6520 on 2/6/2017.
- */
 
 public class NextDayModel {
-    private int id;
-    private String description;
-    private String temperatureMax;
-    private String temperatureMin;
-    private long dateMilis;
+    private final int id;
+    private final String description;
+    private final String temperatureMax;
+    private final String temperatureMin;
+    private final long dateMilis;
 
     public NextDayModel(int id, String description, String temperatureMax, String temperatureMin, long dateMilis) {
         this.id = id;
@@ -42,5 +39,5 @@ public class NextDayModel {
         return temperatureMin;
     }
 
-    public static List<NextDayModel> list = new ArrayList<>();
+    public static final List<NextDayModel> list = new ArrayList<>();
 }

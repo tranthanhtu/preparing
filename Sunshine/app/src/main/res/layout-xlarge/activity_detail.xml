@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="vn.tranthanhtu.sunshine.activitis.DetailActivity">
@@ -9,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -21,10 +21,12 @@
                 android:gravity="center|top"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                tools:ignore="NestedWeights">
                 <TextView
+                    android:id="@+id/tv_time_date"
                     android:textSize="20sp"
-                    android:text="Saturday, September 24"
+                    android:text="@string/saturday_september_24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -34,7 +36,8 @@
                 android:orientation="horizontal"
                 android:layout_weight="2.5"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:gravity="center"
@@ -42,8 +45,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <ImageView
+                        android:contentDescription="@string/icon_large"
                         android:id="@+id/imv_icon_detail"
-                        android:src="@drawable/icon_1000"
                         android:layout_width="96dp"
                         android:layout_height="96dp" />
 
@@ -59,7 +62,8 @@
                         android:text="19\u00b0"
                         android:textSize="72sp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:ignore="HardcodedText" />
 
                 </LinearLayout>
 
@@ -68,7 +72,8 @@
             <LinearLayout
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                android:baselineAligned="false">
                 <LinearLayout
                     android:gravity="center"
                     android:layout_weight="1"
@@ -79,9 +84,10 @@
                         android:fontFamily="sans-serif-light"
                         android:textColor="#727272"
                         android:textSize="36sp"
-                        android:text="Rainy"
+                        android:text="@string/rainy"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:targetApi="jelly_bean" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -96,7 +102,9 @@
                         android:textSize="36sp"
                         android:text="10\u00b0"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:targetApi="jelly_bean"
+                        tools:ignore="HardcodedText" />
 
                 </LinearLayout>
 
@@ -115,30 +123,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="NestedWeights"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights">
                     <TextView
                         style="@style/DetailLabel"
-                        android:text="Humidity"
+                        android:text="@string/humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="center|left"
+                    android:gravity="center|start"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
                         android:id="@+id/tv_humidity_detail"
                         style="@style/ExtraWeatherMeasurement"
-                        android:text="38%"
+                        android:text="@string/humidityValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -151,7 +162,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:gravity="center"
@@ -160,21 +172,21 @@
                     android:layout_weight="1">
                     <TextView
                         style="@style/DetailLabel"
-                        android:text="Pressure"
+                        android:text="@string/pressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="center|left"
+                    android:gravity="center|start"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
                         android:id="@+id/tv_pressure_detail"
                         style="@style/ExtraWeatherMeasurement"
-                        android:text="995 hPa"
+                        android:text="@string/PressureValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -186,7 +198,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:gravity="center"
@@ -195,21 +208,21 @@
                     android:layout_weight="1">
                     <TextView
                         style="@style/DetailLabel"
-                        android:text="Wind"
+                        android:text="@string/wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="center|left"
+                    android:gravity="center|start"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
                         android:id="@+id/tv_wind_detail"
                         style="@style/ExtraWeatherMeasurement"
-                        android:text="4km/h NW"
+                        android:text="@string/windValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 

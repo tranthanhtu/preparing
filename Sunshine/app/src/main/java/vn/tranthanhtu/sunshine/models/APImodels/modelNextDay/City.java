@@ -4,21 +4,19 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
-/**
- * Created by Dell latitude E6520 on 2/7/2017.
- */
 
+@SuppressWarnings("ALL")
 public class City extends RealmObject {
     @SerializedName("id")
-    public String id;
+    private String id;
     @SerializedName("name")
-    public String name;
+    private String name;
     @SerializedName("coord")
-    public Coord coord;
+    private Coord coord;
     @SerializedName("country")
-    public String country;
+    private String country;
     @SerializedName("population")
-    public String population;
+    private String population;
 
     public String getId() {
         return id;

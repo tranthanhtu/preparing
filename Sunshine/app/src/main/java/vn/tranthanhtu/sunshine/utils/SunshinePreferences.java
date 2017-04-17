@@ -22,6 +22,7 @@ import android.preference.PreferenceManager;
 import vn.tranthanhtu.sunshine.R;
 
 
+@SuppressWarnings("ALL")
 public final class SunshinePreferences {
 
 

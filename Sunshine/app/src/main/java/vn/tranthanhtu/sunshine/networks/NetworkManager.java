@@ -4,13 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-/**
- * Created by Dell latitude E6520 on 2/7/2017.
- */
 
 public class NetworkManager {
     private static NetworkManager instance;
-    private ConnectivityManager connectivityManager;
+    private final ConnectivityManager connectivityManager;
 
     public static NetworkManager getInstance() {
         return instance;
@@ -27,9 +24,6 @@ public class NetworkManager {
 
     public boolean isConnectedToInternet() {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-        }
-        return false;
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

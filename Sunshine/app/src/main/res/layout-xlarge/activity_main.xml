@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -18,27 +17,29 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            tools:ignore="NestedWeights"
+            android:baselineAligned="false">
             <LinearLayout
-                android:gravity="center|left"
+                android:gravity="center|start"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                tools:ignore="NestedWeights">
                 <TextView
                     android:textColor="@android:color/white"
                     android:textSize="25sp"
-                    android:text="Sunshine"
+                    android:text="@string/sunshine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
-                android:gravity="right|center"
+                android:gravity="end|center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <ImageView
-                    android:id="@+id/imv_setting"
-                    android:src="@drawable/dots_vertical"
+                    android:contentDescription="@string/icon_large"
                     android:layout_width="24dp"
                     android:layout_height="24dp" />
             </LinearLayout>
@@ -52,7 +53,7 @@
             <TextView
                 android:id="@+id/tv_date_current"
                 android:textColor="@android:color/white"
-                android:text="Today, July 1"
+                android:text="@string/today_july_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -60,15 +61,16 @@
             android:layout_weight="2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:baselineAligned="false">
             <LinearLayout
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <ImageView
+                    android:contentDescription="@string/icon_large"
                     android:id="@+id/imv_icon_weather_current"
-                    android:src="@drawable/icon_1000"
                     android:layout_width="70dp"
                     android:layout_height="70dp" />
             </LinearLayout>
@@ -81,7 +83,7 @@
                     android:id="@+id/tv_temperature_max_current"
                     android:textColor="@android:color/white"
                     android:textSize="55sp"
-                    android:text="18"
+                    android:text="@string/_18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -91,7 +93,8 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:gravity="center"
@@ -100,7 +103,7 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/tv_description_current"
-                    android:text="Sunny"
+                    android:text="@string/sunny"
                     android:textSize="20sp"
                     android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
@@ -114,7 +117,7 @@
                 <TextView
                     android:id="@+id/tv_temperature_min_current"
                     android:textSize="25sp"
-                    android:text="13"
+                    android:text="@string/_18"
                     android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -130,12 +133,13 @@
         android:layout_height="0dp">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_next_day"
                 android:padding="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
             </android.support.v7.widget.RecyclerView>
         </ScrollView>

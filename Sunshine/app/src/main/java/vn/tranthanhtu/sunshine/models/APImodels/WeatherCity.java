@@ -7,22 +7,20 @@ import io.realm.RealmObject;
 import vn.tranthanhtu.sunshine.models.APImodels.modelNextDay.City;
 import vn.tranthanhtu.sunshine.models.APImodels.modelNextDay.List;
 
-/**
- * Created by Dell latitude E6520 on 2/6/2017.
- */
 
+@SuppressWarnings("ALL")
 public class WeatherCity extends RealmObject{
 
     @SerializedName("city")
-    public City city;
+    private City city;
     @SerializedName("cod")
-    public String cod;
+    private String cod;
     @SerializedName("message")
-    public String message;
+    private String message;
     @SerializedName("cnt")
-    public String cnt;
+    private String cnt;
     @SerializedName("list")
-    public RealmList<List> list;
+    private RealmList<List> list;
 
     public City getCity() {
         return city;

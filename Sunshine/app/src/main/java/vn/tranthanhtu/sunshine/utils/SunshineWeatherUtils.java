@@ -25,31 +25,6 @@ public final class SunshineWeatherUtils {
 
     private static final String LOG_TAG = SunshineWeatherUtils.class.getSimpleName();
 
-    private static double celsiusToFahrenheit(double temperatureInCelsius) {
-        double temperatureInFahrenheit = (temperatureInCelsius * 1.8) + 32;
-        return temperatureInFahrenheit;
-    }
-
-    public static String formatTemperature(Context context, double temperature) {
-        if (!SunshinePreferences.isMetric(context)) {
-            temperature = celsiusToFahrenheit(temperature);
-        }
-
-        int temperatureFormatResourceId = R.string.format_temperature;
-
-        return String.format(context.getString(temperatureFormatResourceId), temperature);
-    }
-
-    public static String formatHighLows(Context context, double high, double low) {
-        long roundedHigh = Math.round(high);
-        long roundedLow = Math.round(low);
-
-        String formattedHigh = formatTemperature(context, roundedHigh);
-        String formattedLow = formatTemperature(context, roundedLow);
-
-        String highLowStr = formattedHigh + " / " + formattedLow;
-        return highLowStr;
-    }
 
     public static String getFormattedWind(Context context, float windSpeed, float degrees) {
         int windFormat = R.string.format_wind_kmh;

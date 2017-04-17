@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="59dp"
 
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:baselineAligned="false">
     <LinearLayout
         android:gravity="center"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent">
         <ImageView
+            android:contentDescription="@string/icon_small"
             android:id="@+id/imv_icon_weather"
-            android:src="@drawable/icon_1000"
             android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_height="40dp"
+            tools:ignore="ContentDescription" />
 
     </LinearLayout>
     <LinearLayout
@@ -23,27 +26,28 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_marginTop="10dp"
-            android:gravity="left|center"
+            android:gravity="start|center"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            tools:ignore="NestedWeights">
             <TextView
                 android:id="@+id/tv_date"
-                android:text="Tomorrow"
+                android:text="@string/tomorrow"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginBottom="10dp"
-            android:gravity="left|center"
+            android:gravity="start|center"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp">
             <TextView
                 android:id="@+id/tv_description"
                 android:textColor="@color/secondary_text"
-                android:text="Clear"
+                android:text="@string/clear"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -57,12 +61,13 @@
         android:layout_height="match_parent">
         <TextView
             android:id="@+id/tv_temperature_max"
-            android:text="17"
+            android:text="@string/_18"
             android:fontFamily="sans-serif-light"
             android:textColor="@color/primary_text"
-            android:textSize="28dp"
+            android:textSize="28sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="UnusedAttribute" />
     </LinearLayout>
     <LinearLayout
         android:gravity="center"
@@ -71,11 +76,12 @@
         android:layout_height="match_parent">
         <TextView
             android:id="@+id/tv_temperature_min"
-            android:textSize="28dp"
-            android:text="13"
+            android:textSize="28sp"
+            android:text="@string/_18"
             android:fontFamily="sans-serif-light"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:targetApi="jelly_bean" />
     </LinearLayout>
 
 </LinearLayout>

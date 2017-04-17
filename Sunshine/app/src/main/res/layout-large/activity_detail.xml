@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="vn.tranthanhtu.sunshine.activitis.DetailActivity">
@@ -9,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -22,17 +22,19 @@
                 android:gravity="center|bottom"
                 android:layout_weight="1.8"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                tools:ignore="NestedWeights">
                 <TextView
                     android:id="@+id/tv_time_date"
                     android:textSize="30sp"
-                    android:text="Saturday, September 24"
+                    android:text="@string/saturday_september_24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
@@ -44,8 +46,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <ImageView
+                        android:contentDescription="@string/icon_large"
                         android:id="@+id/imv_icon_detail"
-                        android:src="@drawable/icon_1000"
                         android:layout_width="144dp"
                         android:layout_height="144dp" />
 
@@ -61,13 +63,15 @@
                         android:text="19\u00b0"
                         android:textSize="108sp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:ignore="HardcodedText" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_weight="0.8"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
@@ -81,9 +85,10 @@
                         android:fontFamily="sans-serif-light"
                         android:textColor="#727272"
                         android:textSize="30sp"
-                        android:text="Rainy"
+                        android:text="@string/rainy"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:targetApi="jelly_bean" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,7 +103,9 @@
                         android:textSize="54sp"
                         android:text="10\u00b0"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:targetApi="jelly_bean"
+                        tools:ignore="HardcodedText" />
 
                 </LinearLayout>
 
@@ -107,7 +114,8 @@
             <LinearLayout
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                tools:ignore="UselessLeaf">
 
             </LinearLayout>
 
@@ -122,18 +130,20 @@
             <LinearLayout
                 android:layout_weight="0.2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                tools:ignore="NestedWeights,UselessLeaf">
 
             </LinearLayout>
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:gravity="center|left"
+                    android:gravity="center|start"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
@@ -141,14 +151,15 @@
                         android:layout_marginLeft="50dp"
                         android:textSize="30sp"
                         style="@style/DetailLabel"
-                        android:text="Humidity"
+                        android:text="@string/humidity"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlHardcoded" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="center|left"
+                    android:gravity="center|start"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
@@ -156,7 +167,7 @@
                         android:id="@+id/tv_humidity_detail"
                         style="@style/ExtraWeatherMeasurement"
                         android:textSize="30sp"
-                        android:text="38%"
+                        android:text="@string/humidityValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -166,35 +177,37 @@
             </LinearLayout>
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:gravity="center|left"
+                    android:gravity="center|start"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
                         android:layout_marginLeft="50dp"
                         style="@style/DetailLabel"
-                        android:text="Pressure"
+                        android:text="@string/pressure"
                         android:textSize="30sp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlHardcoded" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="center|left"
+                    android:gravity="center|start"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
                         android:id="@+id/tv_pressure_detail"
                         style="@style/ExtraWeatherMeasurement"
-                        android:text="995 hPa"
+                        android:text="@string/PressureValue"
                         android:textSize="30sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -204,35 +217,37 @@
             </LinearLayout>
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:gravity="center|left"
+                    android:gravity="center|start"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
                         android:layout_marginLeft="50dp"
                         style="@style/DetailLabel"
-                        android:text="Wind"
+                        android:text="@string/wind"
                         android:textSize="30sp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlHardcoded" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="center|left"
+                    android:gravity="center|start"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
                         android:id="@+id/tv_wind_detail"
                         style="@style/ExtraWeatherMeasurement"
-                        android:text="4km/h NW"
+                        android:text="@string/windValue"
                         android:textSize="25sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -244,7 +259,8 @@
             <LinearLayout
                 android:layout_weight="0.2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                tools:ignore="UselessLeaf">
 
             </LinearLayout>
 

@@ -20,7 +20,7 @@
         android:title="@string/pref_units_label" />
 
     <CheckBoxPreference
-        android:defaultValue="@bool/show_notifications_by_default"
+        android:defaultValue="@bool/use_today_layout"
         android:key="@string/pref_enable_notifications_key"
         android:summaryOff="@string/pref_enable_notifications_false"
         android:summaryOn="@string/pref_enable_notifications_true"

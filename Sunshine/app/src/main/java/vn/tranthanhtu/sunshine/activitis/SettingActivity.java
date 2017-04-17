@@ -12,9 +12,8 @@ import android.preference.PreferenceScreen;
 
 import vn.tranthanhtu.sunshine.R;
 import vn.tranthanhtu.sunshine.models.NextDayModel;
-import vn.tranthanhtu.sunshine.services.LoadDataCurrentDayWeather;
-import vn.tranthanhtu.sunshine.services.LoadDataNextDayWeather;
 
+@SuppressWarnings("ALL")
 public class SettingActivity extends PreferenceActivity  implements
         SharedPreferences.OnSharedPreferenceChangeListener{
 
@@ -44,8 +43,6 @@ public class SettingActivity extends PreferenceActivity  implements
     public void onBackPressed() {
         super.onBackPressed();
         NextDayModel.list.clear();
-        startService(new Intent(this, LoadDataCurrentDayWeather.class));
-        startService(new Intent(this, LoadDataNextDayWeather.class));
         startActivity(new Intent(this, WaitActivity.class));
 
     }

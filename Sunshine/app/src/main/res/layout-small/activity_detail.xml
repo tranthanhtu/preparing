@@ -24,9 +24,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 tools:ignore="NestedWeights">
+
                 <TextView
                     android:id="@+id/tv_time_date"
-                    android:textSize="20sp"
+                    android:textSize="12sp"
                     android:text="@string/saturday_september_24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -48,8 +49,8 @@
                     <ImageView
                         android:contentDescription="@string/icon_large"
                         android:id="@+id/imv_icon_detail"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp" />
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
 
                 </LinearLayout>
 
@@ -61,7 +62,7 @@
                     <TextView
                         android:id="@+id/tv_temperature_max_detail"
                         android:text="19\u00b0"
-                        android:textSize="72sp"
+                        android:textSize="20sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:ignore="HardcodedText" />
@@ -84,7 +85,7 @@
                         android:id="@+id/tv_description_detail"
                         android:fontFamily="sans-serif-light"
                         android:textColor="#727272"
-                        android:textSize="20sp"
+                        android:textSize="12sp"
                         android:text="@string/rainy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -100,7 +101,7 @@
                         android:id="@+id/tv_temperature_min_detail"
                         android:fontFamily="sans-serif-light"
                         android:textColor="#727272"
-                        android:textSize="36sp"
+                        android:textSize="12sp"
                         android:text="10\u00b0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -148,7 +149,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
-                        android:layout_marginLeft="35dp"
+                        android:textSize="12sp"
+                        android:layout_marginLeft="15dp"
                         style="@style/DetailLabel"
                         android:text="@string/humidity"
                         android:layout_width="wrap_content"
@@ -164,6 +166,7 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:textSize="12sp"
                         android:id="@+id/tv_humidity_detail"
                         style="@style/ExtraWeatherMeasurement"
                         android:text="@string/humidityValue"
@@ -188,9 +191,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
-                        android:layout_marginLeft="35dp"
+                        android:layout_marginLeft="15dp"
                         style="@style/DetailLabel"
                         android:text="@string/pressure"
+                        android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:ignore="RtlHardcoded" />
@@ -206,6 +210,7 @@
                         android:id="@+id/tv_pressure_detail"
                         style="@style/ExtraWeatherMeasurement"
                         android:text="@string/PressureValue"
+                        android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -226,8 +231,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
-                        android:layout_marginLeft="35dp"
+                        android:layout_marginLeft="15dp"
                         style="@style/DetailLabel"
+                        android:textSize="12sp"
                         android:text="@string/wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -245,6 +251,7 @@
                         android:id="@+id/tv_wind_detail"
                         style="@style/ExtraWeatherMeasurement"
                         android:text="@string/windValue"
+                        android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 

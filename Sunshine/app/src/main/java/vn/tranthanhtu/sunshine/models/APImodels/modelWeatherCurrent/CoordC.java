@@ -4,15 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
-/**
- * Created by Dell latitude E6520 on 2/7/2017.
- */
 
+@SuppressWarnings("ALL")
 public class CoordC extends RealmObject{
     @SerializedName("lon")
-    public String lon;
+    private String lon;
     @SerializedName("lat")
-    public String lat;
+    private String lat;
 
     public String getLon() {
         return lon;

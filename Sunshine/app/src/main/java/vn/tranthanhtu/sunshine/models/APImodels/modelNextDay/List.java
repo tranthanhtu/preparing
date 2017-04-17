@@ -5,27 +5,25 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-/**
- * Created by Dell latitude E6520 on 2/7/2017.
- */
 
+@SuppressWarnings("ALL")
 public class List extends RealmObject {
     @SerializedName("dt")
-    public long dt;
+    private long dt;
     @SerializedName("temp")
-    public Temp temp;
+    private Temp temp;
     @SerializedName("pressure")
-    public String pressure;
+    private String pressure;
     @SerializedName("humidity")
-    public String humidity;
+    private String humidity;
     @SerializedName("weather")
-    public RealmList<Weather> weather;
+    private RealmList<Weather> weather;
     @SerializedName("speed")
-    public float speed;
+    private float speed;
     @SerializedName("deg")
-    public float deg;
+    private float deg;
     @SerializedName("clouds")
-    public String clouds;
+    private String clouds;
 
     public long getDt() {
         return dt;

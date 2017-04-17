@@ -15,6 +15,7 @@
  */
 package vn.tranthanhtu.sunshine.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -31,11 +32,12 @@ import vn.tranthanhtu.sunshine.R;
 /**
  * Class for handling date conversions that are useful for Sunshine.
  */
-public final class SunshineDateUtils {
+@SuppressWarnings("ALL")
+final class SunshineDateUtils {
 
-    public static final String TAG = SunshineDateUtils.class.toString();
+    private static final String TAG = SunshineDateUtils.class.toString();
 
-    public static final long DAY_IN_MILLIS = TimeUnit.DAYS.toMillis(1);
+    private static final long DAY_IN_MILLIS = TimeUnit.DAYS.toMillis(1);
 
     public static long getNormalizedUtcDateForToday() {
 
@@ -50,9 +52,7 @@ public final class SunshineDateUtils {
         long daysSinceEpochLocal = TimeUnit.MILLISECONDS.toDays(timeSinceEpochLocalTimeMillis);
 
 
-        long normalizedUtcMidnightMillis = TimeUnit.DAYS.toMillis(daysSinceEpochLocal);
-
-        return normalizedUtcMidnightMillis;
+        return TimeUnit.DAYS.toMillis(daysSinceEpochLocal);
     }
 
 
@@ -63,8 +63,7 @@ public final class SunshineDateUtils {
 
     public static long normalizeDate(long date) {
         long daysSinceEpoch = elapsedDaysSinceEpoch(date);
-        long millisFromEpochToTodayAtMidnightUtc = daysSinceEpoch * DAY_IN_MILLIS;
-        return millisFromEpochToTodayAtMidnightUtc;
+        return daysSinceEpoch * DAY_IN_MILLIS;
     }
 
 
@@ -83,8 +82,7 @@ public final class SunshineDateUtils {
         TimeZone timeZone = TimeZone.getDefault();
 
         long gmtOffset = timeZone.getOffset(normalizedUtcDate);
-        long localMidnightMillis = normalizedUtcDate - gmtOffset;
-        return localMidnightMillis;
+        return normalizedUtcDate - gmtOffset;
     }
 
 
@@ -103,7 +101,8 @@ public final class SunshineDateUtils {
             String readableDate = getReadableDateString(context, localDate);
             if (daysFromEpochToProvidedDate - daysFromEpochToToday < 2) {
 
-                String localizedDayName = new SimpleDateFormat("EEEE").format(localDate);
+                @SuppressLint("SimpleDateFormat") String localizedDayName =
+                        new SimpleDateFormat("EEEE").format(localDate);
                 return readableDate.replace(localizedDayName, dayName);
             } else {
                 return readableDate;
@@ -131,7 +130,7 @@ public final class SunshineDateUtils {
     }
 
     public static String getDate(long milliSeconds) {
-        SimpleDateFormat formater = new SimpleDateFormat("EEE");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formater = new SimpleDateFormat("EEE");
         Calendar calendar = Calendar.getInstance();
 
         calendar.setTimeInMillis(milliSeconds);
@@ -155,6 +154,7 @@ public final class SunshineDateUtils {
                 return context.getString(R.string.tomorrow);
 
             default:
+                @SuppressLint("SimpleDateFormat")
                 SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
                 return dayFormat.format(dateInMillis);
 
@@ -162,6 +162,7 @@ public final class SunshineDateUtils {
     }
 
 
+    @SuppressLint("SwitchIntDef")
     public static String dayStringFormat(long msecs) {
         GregorianCalendar cal = new GregorianCalendar();
 

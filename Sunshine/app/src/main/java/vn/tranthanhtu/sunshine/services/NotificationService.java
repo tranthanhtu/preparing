@@ -1,16 +1,18 @@
 package vn.tranthanhtu.sunshine.services;
 
-import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
@@ -22,21 +24,8 @@ import vn.tranthanhtu.sunshine.models.APImodels.WeatherCity;
 import vn.tranthanhtu.sunshine.models.APImodels.modelNextDay.List;
 import vn.tranthanhtu.sunshine.utils.SunshineWeatherUtils;
 
-/**
- * Created by Dell latitude E6520 on 2/13/2017.
- */
 
-public class NotificationService extends IntentService {
-    WeatherCity weatherCity;
-
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
-    public NotificationService(String name) {
-        super(name);
-    }
+public class NotificationService extends Service {
 
     @Nullable
     @Override
@@ -44,61 +33,68 @@ public class NotificationService extends IntentService {
         return null;
     }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        weatherCity = RealmHandle.getInstances().getWeatherCity();
-        List list = weatherCity.getList().get(0);
-        String shortDescription = SunshineWeatherUtils
-                .getStringForWeatherCondition(
-                        getApplicationContext(),
-                        list.getWeather().get(0).getId()
-                );
-        Resources resources = getApplicationContext().getResources();
-        int largeArtResourceId = SunshineWeatherUtils
-                .getLargeArtResourceIdForWeatherCondition(list.getWeather().get(0).getId());
-
-        Bitmap largeIcon = BitmapFactory.decodeResource(
-                resources,
-                largeArtResourceId);
-
-
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext()
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Intent repeat_intent = new Intent(getApplicationContext(), MainActivity.class);
-
-        repeat_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                getApplicationContext(),
-                0,
-                repeat_intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        );
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                .setColor(ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary))
-                .setSmallIcon(SunshineWeatherUtils
-                        .getSmallArtResourceIdForWeatherCondition(list.getWeather().get(0).getId()))
-                .setLargeIcon(largeIcon)
-                .setContentTitle("Sunshine")
-                .setContentText("Forcast:" + shortDescription
-                        + " - " + "High:" + list.getTemp().getMax()
-                        + " - " + "Low:" + list.getTemp().getMin())
-                .setAutoCancel(true);
-
-        builder.setContentIntent(pendingIntent);
-
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        builder.setSound(alarmSound);
-
-        notificationManager.notify(100, builder.build());
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preferences.getBoolean("enable_notifications", false)) {
+            WeatherCity weatherCity = RealmHandle.getInstances().getWeatherCity();
+            List list = weatherCity.getList().get(0);
+            String shortDescription = SunshineWeatherUtils
+                    .getStringForWeatherCondition(
+                            getApplicationContext(),
+                            list.getWeather().get(0).getId()
+                    );
+            Resources resources = getApplicationContext().getResources();
+            int largeArtResourceId = SunshineWeatherUtils
+                    .getLargeArtResourceIdForWeatherCondition(list.getWeather().get(0).getId());
+
+            Bitmap largeIcon = BitmapFactory.decodeResource(
+                    resources,
+                    largeArtResourceId);
+
+
+            NotificationManager notificationManager = (NotificationManager) getApplicationContext()
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
+
+            Intent repeat_intent = new Intent(getApplicationContext(), MainActivity.class);
+
+            repeat_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    getApplicationContext(),
+                    0,
+                    repeat_intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+            );
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                    getApplicationContext())
+                    .setColor(ContextCompat.getColor(getApplicationContext(),
+                            R.color.colorPrimary)
+                    )
+                    .setSmallIcon(SunshineWeatherUtils
+                            .getSmallArtResourceIdForWeatherCondition(
+                                    list.getWeather()
+                                            .get(0)
+                                            .getId())
+                    )
+                    .setLargeIcon(largeIcon)
+                    .setContentTitle("Sunshine")
+                    .setContentText("Forcast:" + shortDescription
+                            + " - " + "High:" + list.getTemp().getMax()
+                            + " - " + "Low:" + list.getTemp().getMin())
+                    .setAutoCancel(true);
+
+            builder.setContentIntent(pendingIntent);
+
+            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            builder.setSound(alarmSound);
+
+            notificationManager.notify(100, builder.build());
+        }
 
     }
 

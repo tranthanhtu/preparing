@@ -4,23 +4,21 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
-/**
- * Created by Dell latitude E6520 on 2/7/2017.
- */
 
+@SuppressWarnings("ALL")
 public class Temp extends RealmObject {
     @SerializedName("day")
-    public String day;
+    private String day;
     @SerializedName("min")
-    public String min;
+    private String min;
     @SerializedName("max")
-    public String max;
+    private String max;
     @SerializedName("night")
-    public String night;
+    private String night;
     @SerializedName("eve")
-    public String eve;
+    private String eve;
     @SerializedName("morn")
-    public String morn;
+    private String morn;
 
     public String getDay() {
         return day;

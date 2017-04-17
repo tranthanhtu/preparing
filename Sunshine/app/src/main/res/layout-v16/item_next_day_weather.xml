@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="55dp"
+    android:layout_height="59dp"
 
     android:orientation="horizontal"
     android:baselineAligned="false">
@@ -14,8 +14,10 @@
         <ImageView
             android:contentDescription="@string/icon_small"
             android:id="@+id/imv_icon_weather"
+
             android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_height="40dp"
+            tools:ignore="ContentDescription" />
 
     </LinearLayout>
     <LinearLayout
@@ -33,7 +35,7 @@
             <TextView
                 android:id="@+id/tv_date"
                 android:text="@string/tomorrow"
-                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -45,8 +47,9 @@
             android:layout_height="0dp">
             <TextView
                 android:id="@+id/tv_description"
-                android:textColor="#d1b6b6"
+                android:textColor="@color/secondary_text"
                 android:text="@string/clear"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -60,7 +63,9 @@
         <TextView
             android:id="@+id/tv_temperature_max"
             android:text="@string/_18"
-            android:textSize="25sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/primary_text"
+            android:textSize="28sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -71,9 +76,9 @@
         android:layout_height="match_parent">
         <TextView
             android:id="@+id/tv_temperature_min"
-            android:textSize="25sp"
-            android:text=""
-            android:textColor="#d1b6b6"
+            android:textSize="28sp"
+            android:text="@string/_18"
+            android:fontFamily="sans-serif-light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

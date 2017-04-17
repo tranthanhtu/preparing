@@ -7,12 +7,10 @@ import io.realm.RealmResults;
 import vn.tranthanhtu.sunshine.models.APImodels.WeatherCity;
 import vn.tranthanhtu.sunshine.models.APImodels.WeatherCityCurrent;
 
-/**
- * Created by Dell latitude E6520 on 2/7/2017.
- */
 
+@SuppressWarnings("ALL")
 public class RealmHandle {
-    private Realm realm;
+    private final Realm realm;
 
     private RealmHandle(Context context){
         Realm.init(context);
@@ -33,14 +31,14 @@ public class RealmHandle {
                     .findAll();
 
             weatherCity = weatherCities.get((int)(getCount() - 1));
-        }catch (Exception e){
+        }catch (Exception ignored){
 
         }
 
         return weatherCity;
     }
 
-    public long getCount() {
+    private long getCount() {
         return realm.where(WeatherCity.class).count();
     }
     //---------------------------------------------------------------/
@@ -59,7 +57,7 @@ public class RealmHandle {
                     .findAll();
 
             weatherCityCurrent = weatherCityCurrents.get((int)(getCount() -1));
-        }catch (Exception e){
+        }catch (Exception ignored){
 
         }
         return weatherCityCurrent;

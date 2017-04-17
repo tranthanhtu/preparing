@@ -1,9 +1,12 @@
 package vn.tranthanhtu.sunshine.activitis;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +23,7 @@ import vn.tranthanhtu.sunshine.models.APImodels.modelNextDay.List;
 import vn.tranthanhtu.sunshine.utils.SunshineWeatherUtils;
 
 public class DetailActivity extends AppCompatActivity {
-    public static final String TAG = DetailActivity.class.toString();
+    private static final String TAG = DetailActivity.class.toString();
     private String position;
     private WeatherCity weatherCity;
 
@@ -36,6 +39,8 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        Log.d(TAG, "onCreate: ");
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Details");
         getReferences();
@@ -44,8 +49,11 @@ public class DetailActivity extends AppCompatActivity {
         setupUI();
     }
 
+    @SuppressLint("SetTextI18n")
     private void setupUI() {
         List detail = weatherCity.getList().get(Integer.parseInt(position));
+
+        Log.d(TAG, "setupUI: ");
 
         imvIconDetail.setImageResource(SunshineWeatherUtils
                 .getLargeArtResourceIdForWeatherCondition(detail.getWeather().get(0).getId()));
@@ -61,7 +69,7 @@ public class DetailActivity extends AppCompatActivity {
                 detail.getDeg());
         tvWindDetail.setText(windString);
 
-        String dateString1 = new SimpleDateFormat("EEEE, MMMM d")
+        @SuppressLint("SimpleDateFormat") String dateString1 = new SimpleDateFormat("EEEE, MMMM d")
                 .format(new Date(detail.getDt() * 1000));
         tvTimeDate.setText(dateString1);
 
@@ -116,7 +124,9 @@ public class DetailActivity extends AppCompatActivity {
                 .setType("text/plain")
                 .setText("")
                 .getIntent();
-        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        }
         return shareIntent;
     }
 }

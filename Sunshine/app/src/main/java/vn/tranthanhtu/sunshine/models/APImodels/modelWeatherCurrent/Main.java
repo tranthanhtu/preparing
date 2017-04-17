@@ -4,25 +4,23 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
-/**
- * Created by Dell latitude E6520 on 2/7/2017.
- */
 
+@SuppressWarnings("ALL")
 public class Main extends RealmObject {
     @SerializedName("temp")
-    public String temp;
+    private String temp;
     @SerializedName("pressure")
-    public String pressure;
+    private String pressure;
     @SerializedName("humidity")
-    public String humidity;
+    private String humidity;
     @SerializedName("temp_min")
-    public float temp_min;
+    private float temp_min;
     @SerializedName("temp_max")
-    public float temp_max;
+    private float temp_max;
     @SerializedName("sea_level")
-    public String sea_level;
+    private String sea_level;
     @SerializedName("grnd_level")
-    public String grnd_level;
+    private String grnd_level;
 
     public String getTemp() {
         return temp;

@@ -11,9 +11,6 @@ import vn.tranthanhtu.sunshine.viewholders.NextDayViewHolder;
 
 import static vn.tranthanhtu.sunshine.models.NextDayModel.list;
 
-/**
- * Created by Dell latitude E6520 on 2/6/2017.
- */
 
 public class NextDayWeatherAdapter extends RecyclerView.Adapter<NextDayViewHolder> {
 
@@ -21,8 +18,7 @@ public class NextDayWeatherAdapter extends RecyclerView.Adapter<NextDayViewHolde
     public NextDayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_next_day_weather, parent, false);
-        NextDayViewHolder viewHolder = new NextDayViewHolder(view);
-        return viewHolder;
+        return new NextDayViewHolder(view);
     }
 
     @Override

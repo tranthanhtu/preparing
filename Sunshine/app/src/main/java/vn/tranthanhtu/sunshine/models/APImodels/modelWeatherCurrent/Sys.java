@@ -4,19 +4,17 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
-/**
- * Created by Dell latitude E6520 on 2/7/2017.
- */
 
+@SuppressWarnings("ALL")
 public class Sys extends RealmObject {
     @SerializedName("message")
-    public String message;
+    private String message;
     @SerializedName("country")
-    public String country;
+    private String country;
     @SerializedName("sunrise")
-    public String sunrise;
+    private String sunrise;
     @SerializedName("sunset")
-    public String sunset;
+    private String sunset;
 
     public String getMessage() {
         return message;

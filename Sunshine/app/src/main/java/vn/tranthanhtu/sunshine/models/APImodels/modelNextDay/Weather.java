@@ -4,19 +4,18 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
-/**
- * Created by Dell latitude E6520 on 2/7/2017.
- */
 
+
+@SuppressWarnings("ALL")
 public class Weather extends RealmObject {
     @SerializedName("id")
-    public int id;
+    private int id;
     @SerializedName("main")
-    public String main;
+    private String main;
     @SerializedName("description")
-    public String description;
+    private String description;
     @SerializedName("icon")
-    public String icon;
+    private String icon;
 
     public int getId() {
         return id;

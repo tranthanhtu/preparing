@@ -1,17 +1,17 @@
 package vn.tranthanhtu.sunshine.activitis;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,15 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvTemperatureMaxCurrent;
     private TextView tvTemperatureMinCurrent;
 
-    private int tempMaxCurrent;
-    private int tempMinCurrent;
 
-    SharedPreferences preferences;
-
-
-    WeatherCity weatherCity;
-    WeatherCityCurrent current;
-    RecyclerView rvNextDay;
+    private WeatherCity weatherCity;
+    private WeatherCityCurrent current;
+    private RecyclerView rvNextDay;
     private NextDayWeatherAdapter adapter;
 
     @Override
@@ -53,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setElevation(0f);
+        RealmHandle.init(this);
         weatherCity = RealmHandle.getInstances().getWeatherCity();
+        Log.d(TAG, String.format("onCreate: %s", weatherCity));
         current = RealmHandle.getInstances().getWeatherCityCurrent();
+        Log.d(TAG, String.format("onCreate: %s", current));
         Log.d(TAG, "onCreate: ");
         setReferences();
         setupUI();
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         rvNextDay.addOnItemTouchListener(new RecyclerItemClickListener(this,
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
-                    public void onItemClick(View view, int position) {
+                    public void onItemClick(int position) {
                         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                         intent.putExtra("position", position);
                         startActivity(intent);
@@ -88,12 +86,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private void setupUI() {
         Log.d(TAG, "setupUI: " + current.getWeather().get(0).getId());
         imvIconWeatherCurrent.setImageResource(SunshineWeatherUtils
                 .getLargeArtResourceIdForWeatherCondition(current.getWeather().get(0).getId()));
-        tempMinCurrent = (int) Float.parseFloat(weatherCity.getList().get(0).getTemp().getMin());
-        tempMaxCurrent = (int) Float.parseFloat(weatherCity.getList().get(0).getTemp().getMax());
+        int tempMinCurrent = (int) Float.parseFloat(weatherCity.getList().get(0).getTemp().getMin());
+        int tempMaxCurrent = (int) Float.parseFloat(weatherCity.getList().get(0).getTemp().getMax());
 
         tvTemperatureMinCurrent.setText(tempMinCurrent + "\u00b0");
         tvTemperatureMaxCurrent.setText(tempMaxCurrent + "\u00b0");
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getTimeCurrent() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd");
         String currentTime = dateFormat.format(new Date());
         tvDateCurrent.setText("Today, " + currentTime);
     }
@@ -183,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.action_map) {
-            preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             String location = preferences.getString("location", "location");
             String units = preferences.getString("units", "units");
             Boolean enable_notifications = preferences.getBoolean("enable_notifications", false);
